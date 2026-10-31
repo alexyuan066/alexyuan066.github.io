@@ -1,6 +1,15 @@
 # Portfolio copy review
 
-This worksheet records the current site copy for review. Section labels such as “Preview” and “Requested changes” are worksheet labels, not new website text. Copy a section into a message and add replacement wording under its requested-changes space. Keep qualifiers such as “simulated,” “preliminary,” and “pending” unless new evidence supports changing them.
+Review notes for this annotated revision:
+
+- The starred remarks are instructions and are not displayed on the website.
+- The duplicate education/GPA strip below the introduction is removed. Both rewritten About blocks are retained, as Alex confirmed.
+- The adjective before “hardware” in the small top introduction was not fully readable. The revision uses the neutral wording “hardware and sustainable infrastructure” rather than guessing.
+- The senior-design preview describes the purpose of ultrasonic control without implying proven treatment. Its current-status limitations remain explicit.
+- No actual combustion video was supplied, so the “see video below” reference is omitted until a real file can be added.
+- Contact details remain blank and can be entered directly in `src/contact.json`; see `CONTACT.md`.
+
+This worksheet records the copy included in Alex's annotated revision. Publication is verified through the Pages workflow for the intended commit and the corresponding content at https://alexyuan066.github.io/. Section labels such as “Preview” and “Requested changes” are worksheet labels, not new website text. Copy a section into a message and add replacement wording under its requested-changes space. Preserve factual qualifiers unless new evidence supports changing them.
 
 ## Navigation and shared controls
 
@@ -26,23 +35,21 @@ Requested changes:
 
 Current text:
 
-Mechanical engineering · UConn
-
 Alex Yuan
-
-Mechanical design & product development
-
-I’m a mechanical engineering student with experience in mechanical design, analysis, and testing.
-
-My work includes water-electrolysis hardware, preliminary system design, team engineering, and combustion research.
-
-View selected work
 
 University of Connecticut
 
 B.S. Mechanical Engineering · Expected May 2027
 
 3.87 GPA
+
+About Me
+
+I am a fast-tracked Mechanical Engineering student at the University of Connecticut, completing my B.S. in three years (Expected May 2027). My work connects hardware and sustainable infrastructure with conceptual R&D and physical manufacturing.
+
+I am actively seeking 2027 engineering rotational programs across the U.S., as well as direct-hire mechanical design roles, with a strong interest in relocating to Colorado.
+
+I thrive on tackling complex challenges across the product lifecycle, bringing a strong foundation in mechanical design, cross-functional leadership, and hands-on testing and analysis.
 
 Requested changes:
 
@@ -62,11 +69,177 @@ Requested changes:
 
 <!-- Add replacement wording or comments here. -->
 
-## 01 — Water-Electrolysis Manifold Redesign
+## 01 — Ultrasonic Invasive-Plant Control
 
 ### Preview
 
 01
+
+August 2026–present
+
+Ultrasonic Invasive-Plant Control
+
+UConn / Windham Water Works · Senior Design Team Manager
+
+Designing and fabricating an unmanned surface vehicle for ultrasonic control of invasive-plant growth. As Team Manager, I lead the translation of environmental constraints and acoustic requirements into a physical system architecture—leveraging mechanical conceptualization, applied research, and cross-functional stakeholder coordination.
+
+Tags:
+
+- System design
+- Literature research
+- Trade studies
+- Team coordination
+
+Supporting panel:
+
+Current status
+
+Ongoing, preliminary concept development: a stem-positioning grate paired with downward-facing ultrasonic transducers. We are currently finalizing the physical test apparatus design to transition into active hardware validation.
+
+Requested changes to preview/panel:
+
+<!-- Add replacement wording or comments here. -->
+
+### Expanded story
+
+Engineering details / 01
+
+August 2026–present
+
+#### Requirements and environmental constraints
+
+Our senior design team is developing an unmanned surface vehicle for ultrasonic control of invasive aquatic plants with Windham Water Works. My work translates acoustic-treatment requirements and environmental constraints into preliminary system design.
+
+I am researching ultrasonic cavitation and its potential effects on aquatic organisms. I use papers and professional resources to support concept development and design decisions; environmental safety remains a question to investigate.
+
+#### Treatment concept and team coordination
+
+I am developing a treatment concept that pairs a stem-positioning grate with downward-facing transducers.
+
+As team manager, I manage sponsor and faculty communications and facilitate technical discussions about requirements, open questions, and next steps.
+
+#### Current project status
+
+This is ongoing, preliminary design work. Successful treatment, environmental safety, completed modeling, and a validated prototype have not yet been established.
+
+Requested changes to expanded story:
+
+<!-- Add replacement wording or comments here. -->
+
+## 02 — Rocket Engineering & Team Leadership
+
+### Preview
+
+02
+
+September 2024–present
+
+Rocket Engineering & Team Leadership
+
+UConn AIAA · Executive Board Member | Technical Lead
+
+Serving a dual role for a 200+ member organization. On the AIAA Executive Board, I coordinate club-wide outreach, recruitment, and corporate sponsorships. Concurrently, as Technical Lead for the Rocketry team (one of AIAA’s two core divisions), I drive propulsion and structural R&D, mentor student engineers, and bridge the gap between complex fluid modeling and physical hardware fabrication.
+
+Tags:
+
+- Engineering leadership
+- Student project mentoring
+- Fluid system modeling (Simulink)
+
+Supporting panel:
+
+Dual Leadership Role
+
+Operating in a dual capacity: managing Lockheed Martin corporate communications and operations for the broader AIAA chapter, while simultaneously serving as Technical Lead for the Rocketry division to direct fluid system modeling and propulsion hardware design.
+
+Requested changes to preview/panel:
+
+<!-- Add replacement wording or comments here. -->
+
+### Expanded story
+
+Engineering details / 02
+
+September 2024–present
+
+#### Sponsorship, outreach, and recruitment
+
+I coordinate communications among club leadership, students, and corporate sponsors, supporting events, member outreach, and sponsorship funding from Lockheed Martin. I also create Instagram and LinkedIn posts to share club activities and promote opportunities for students to get involved.
+
+To give interested students a clearer path onto the rocket team, I initiated a structured application and selection process. I created and promoted the application, coordinated applicant review, and attracted more than ten applicants.
+
+#### Project coordination & mentoring
+
+As Rocketry Technical Lead, I helped plan student project assignments and team-lead support. I now mentor project members, helping them work through design questions, review progress, and identify next steps.
+
+#### Rocket feed-system modeling
+
+A teammate and I jointly developed a model of the rocket’s nitrous oxide and ethanol feed systems. We worked closely throughout the process, identifying the plumbing components and representing their flow resistance in a network extending from the propellant tanks through the combustion chamber.
+
+We used Simulink to evaluate pressure losses through the feed systems and inform orifice sizing. Both of us contributed across the component definition, resistance-network development, and modeling work.
+
+#### Additional technical work
+
+I have also contributed CFD analysis, participated in team hot-fire tests, and provided design feedback on student-developed hardware.
+
+Requested changes to expanded story:
+
+<!-- Add replacement wording or comments here. -->
+
+## 03 — Sustainable-Fuel Combustion Research
+
+### Preview
+
+03
+
+October 2025–May 2026
+
+Sustainable-Fuel Combustion Research
+
+UConn · Undergraduate Research Assistant
+
+Supported sustainable-fuel combustion research through hands-on experimental testing, pressure-system calibration, and LabVIEW data analysis. Working alongside graduate researchers, I bridged physical flame data with simulation models and actively proposed, designed, and fabricated physical test-stand hardware to improve experimental stability and data accuracy.
+
+Tags:
+
+- LabVIEW
+- ANSYS Fluent
+- SolidWorks (CAD)
+- Experimental Analysis
+
+Supporting panel:
+
+Research scope
+
+Identified and solved a critical instability issue in a premixed-flame experiment. To prevent unwanted flame propagation and soot-inducing air currents, I proposed and fabricated a secondary lateral mesh configuration. This mechanical modification improved observed flame stability for high-fidelity data collection.
+
+Requested changes to preview/panel:
+
+<!-- Add replacement wording or comments here. -->
+
+### Expanded story
+
+Engineering details / 03
+
+October 2025–May 2026
+
+#### Data Analysis & Simulation
+
+I supported premixed-flame combustion research by characterizing fluid dynamics and evaluating fuel-oxidizer interactions at the nozzle outlet. To support the validation of combustion models, I executed hands-on experimental testing, processing and analyzing the resulting data in LabVIEW. I also compared this physical flame data against ANSYS Fluent simulations to evaluate the accuracy of our theoretical combustion profiles.
+
+#### Hardware Fabrication & Equipment Calibration
+
+I was responsible for the physical setup and accuracy of the test stand, which included rigorous pressure-system calibration using precision gauges and data collection via gas chromatography-mass spectrometry (GC/MS). During physical trials, I identified a recurring instability where flames propagated around the primary heat-dissipation mesh, causing unwanted air currents. To solve this, I proposed and fabricated a mechanical modification with graduate-student guidance: installing secondary, lateral meshes to act as a physical boundary. This layered configuration successfully stabilized the flame, improving the quality of our experimental data collection.
+
+Requested changes to expanded story:
+
+<!-- Add replacement wording or comments here. -->
+
+## 04 — Water-Electrolysis Manifold Redesign
+
+### Preview
+
+04
 
 June–August 2026
 
@@ -81,8 +254,10 @@ Separate internship contributions: gasket pressure testing and VBA data-extracti
 Tags:
 
 - Mechanical design
-- CFD & FEA
-- GD&T
+- CFD & FEA (PTC Creo)
+- Geometric Dimensioning & Tolerancing (GD&T)
+- Visual Basic for Applications (VBA)
+- Windchill (PLM)
 
 Supporting panel:
 
@@ -96,7 +271,7 @@ Requested changes to preview/panel:
 
 ### Expanded story
 
-Engineering details / 01
+Engineering details / 04
 
 June–August 2026
 
@@ -126,173 +301,17 @@ Requested changes to expanded story:
 
 <!-- Add replacement wording or comments here. -->
 
-## 02 — Ultrasonic Invasive-Plant Control
-
-### Preview
-
-02
-
-August 2026–present
-
-Ultrasonic Invasive-Plant Control
-
-UConn / Windham Water Works · Senior Design Team Manager
-
-Developing a preliminary treatment concept for an unmanned surface vehicle, translating acoustic requirements and environmental constraints into system design while coordinating the team, sponsor, and faculty.
-
-Tags:
-
-- System design
-- Literature research
-- Team coordination
-
-Supporting panel:
-
-Current status
-
-Ongoing, preliminary concept development: a stem-positioning grate paired with downward-facing ultrasonic transducers.
-
-Requested changes to preview/panel:
-
-<!-- Add replacement wording or comments here. -->
-
-### Expanded story
-
-Engineering details / 02
-
-August 2026–present
-
-#### Requirements and environmental constraints
-
-Our senior design team is developing an unmanned surface vehicle for ultrasonic control of invasive aquatic plants with Windham Water Works. My work translates acoustic-treatment requirements and environmental constraints into preliminary system design.
-
-I am researching ultrasonic cavitation and its potential effects on aquatic organisms. I use papers and professional resources to support concept development and design decisions; environmental safety remains a question to investigate.
-
-#### Treatment concept and team coordination
-
-I am developing a treatment concept that pairs a stem-positioning grate with downward-facing transducers.
-
-As team manager, I manage sponsor and faculty communications and facilitate technical discussions about requirements, open questions, and next steps.
-
-#### Current project status
-
-This is ongoing, preliminary design work. Successful treatment, environmental safety, completed modeling, and a validated prototype have not yet been established.
-
-Requested changes to expanded story:
-
-<!-- Add replacement wording or comments here. -->
-
-## 03 — Rocket Engineering & Team Leadership
-
-### Preview
-
-03
-
-September 2024–present
-
-Rocket Engineering & Team Leadership
-
-UConn AIAA · Executive Board Member
-
-Secured corporate sponsorship, led targeted recruitment, contributed technical consultation, and participated in team hot-fire tests.
-
-Tags:
-
-- Engineering leadership
-- Design review
-- Team testing
-
-Supporting panel:
-
-Leadership contributions
-
-Secured Lockheed Martin sponsorship and organized events and outreach for a club serving 200+ student members.
-
-Requested changes to preview/panel:
-
-<!-- Add replacement wording or comments here. -->
-
-### Expanded story
-
-Engineering details / 03
-
-September 2024–present
-
-#### Sponsorship, outreach, and recruitment
-
-I secured Lockheed Martin corporate sponsorship and coordinated the associated documentation and communications. I also organized events and outreach for the UConn AIAA club, which serves 200+ student members.
-
-For the VTVL rocket team, I led targeted recruitment to address electrical-engineering and computer-science skill gaps and support project succession. I created and promoted an application that attracted 7+ quality applicants.
-
-#### Selected technical contributions
-
-I contributed technical consultation and some CFD work, and participated in team hot-fire tests. These were contributions to the team’s work; I did not own the overall rocket design.
-
-A teammate asked me to review a 3D-printed connector between a landing leg and the rocket body. Their original concept used one bolt. I recommended a two-fastener arrangement to address rotation and potentially improve load carrying.
-
-The CAD and connector design belong to my teammate. They plan to adopt the recommendation; updated CAD and testing are pending, and a strength improvement has not been verified.
-
-Requested changes to expanded story:
-
-<!-- Add replacement wording or comments here. -->
-
-## 04 — Sustainable-Fuel Combustion Research
-
-### Preview
-
-04
-
-October 2025–May 2026
-
-Sustainable-Fuel Combustion Research
-
-UConn · Undergraduate Research Assistant
-
-Compared experimental laminar-flame data with ANSYS Fluent simulations and automated molecular-concentration analysis in MATLAB to support combustion-model validation.
-
-Tags:
-
-- ANSYS Fluent
-- MATLAB
-- Experimental analysis
-
-Supporting panel:
-
-Research scope
-
-Analyzed laminar-flame combustion and evaluated fuel–oxidizer interactions by comparing experimental data with ANSYS Fluent simulations.
-
-Requested changes to preview/panel:
-
-<!-- Add replacement wording or comments here. -->
-
-### Expanded story
-
-Engineering details / 04
-
-October 2025–May 2026
-
-#### Experimental data and simulation
-
-As an undergraduate research assistant in UConn’s Department of Mechanical Engineering, I analyzed laminar-flame combustion for sustainable-fuel research. I compared experimental flame data against ANSYS Fluent simulations to evaluate fuel–oxidizer interactions.
-
-I automated extraction and comparative analysis of molecular-concentration datasets in MATLAB to support combustion-model validation. I also contributed a physical test-stand improvement to stabilize the flame; the exact modification and a quantified effect are not documented here.
-
-Requested changes to expanded story:
-
-<!-- Add replacement wording or comments here. -->
-
 ## About
 
 Current text:
 
 About
 
-I’m studying mechanical engineering at the University of Connecticut, with an interest in mechanical design and product development.
+I am a Mechanical Engineering student at the University of Connecticut completing my degree in just three years by May 2027. My academic and professional background is built on a strong foundation of mechanical design, physical prototyping, and hardware development.
 
-My experience includes comparing simulations with experimental data, checking designs with hand calculations, testing hardware, and contributing to technical reviews with engineering teams.
+My experience bridges conceptual research with physical manufacturing. I combine advanced CAD, fluid and structural simulation, physical hardware fabrication, and technical design reviews to solve complex engineering problems.
 
-I’m interested in sustainability, clean technology, and renewable-energy hardware. These are directions I want to explore as I consider engineering roles, building on my experience in design, analysis, testing, and collaboration.
+I am deeply passionate about clean energy technology and the global energy transition. I am actively seeking 2027 engineering rotational programs nationwide, as well as direct-hire mechanical design roles in major engineering hubs where I can work alongside driven, like-minded teams.
 
 Requested changes:
 
@@ -310,7 +329,7 @@ Creo · SolidWorks · Fusion 360 · GD&T · ASME Y14.5 · Windchill PLM
 
 ### Analysis & programming
 
-Creo Flow Analysis · Creo Simulate · ANSYS Fluent · MATLAB · Python · VBA
+Creo Flow Analysis · Creo Simulate · ANSYS Fluent · ANSYS Mechanical · MATLAB · Python · Excel VBA
 
 ### Communication & tools
 
@@ -349,6 +368,8 @@ Contact
 For opportunities in mechanical design and product development.
 
 Public contact details will be added here.
+
+Public contact fields are currently blank. Follow [CONTACT.md](CONTACT.md) to edit them directly in `src/contact.json`; there is no need to send their values in chat.
 
 Requested changes:
 

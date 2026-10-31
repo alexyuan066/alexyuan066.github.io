@@ -40,19 +40,19 @@ nav svg { width: 15px; height: 15px; }
 .hero { padding-top: 62px; }
 .hero-main { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; padding-bottom: 47px; }
 .hero-name { border-top: 3px solid var(--green); padding-top: 22px; }
+.hero-name h1 { margin-top: 0; }
+.hero-education { margin-top: 25px; max-width: 430px; }
+.hero-education p { font: 400 12px/1.9 var(--mono); color: var(--muted); }
+.hero-education .technical-label { color: var(--green); font-size: 11px; }
 h1 { font-size: clamp(40px, 4.4vw, 60px); line-height: 1.1; font-weight: 650; letter-spacing: -1.7px; color: var(--ink); margin: 17px 0; }
-.hero-focus { font-size: 19px; line-height: 1.55; font-weight: 500; color: var(--ink); max-width: 430px; }
 .hero-intro { padding-top: 23px; border-top: 1px solid var(--line); }
-.hero-intro p { font-size: 16px; line-height: 1.75; color: var(--muted); max-width: 490px; }
+.hero-intro h2 { font-size: 17px; line-height: 1.5; letter-spacing: 0; margin-bottom: 15px; }
+.hero-intro p { font-size: 15px; line-height: 1.75; color: var(--muted); max-width: 510px; }
 .hero-intro p + p { margin-top: 14px; }
 .hero-intro strong { color: var(--ink); font-weight: 600; }
 .text-link { font-size: 13px; font-weight: 600; display: inline-flex; gap: 18px; align-items: center; padding-bottom: 7px; border-bottom: 1px solid var(--ink); color: var(--ink); }
 .text-link svg { width: 18px; height: 18px; transition: transform .15s; }
 .text-link:hover svg { transform: translateX(3px); }
-.hero-intro .text-link { margin-top: 24px; }
-.hero-bottom { display: flex; gap: 25px; align-items: center; border-block: 1px solid var(--line); padding: 18px 0; font-size: 12px; line-height: 1.65; color: var(--muted); }
-.hero-bottom > span + span { border-left: 1px solid var(--line); padding-left: 25px; }
-.hero-bottom a { margin-left: auto; width: 28px; height: 28px; display: grid; place-items: center; color: var(--ink); font-size: 21px; }
 h2 { font-size: 31px; font-weight: 650; line-height: 1.2; letter-spacing: -.5px; color: var(--ink); }
 .selected-work { padding-top: 58px; padding-bottom: 64px; }
 .section-heading { display: flex; justify-content: space-between; align-items: center; gap: 30px; margin-bottom: 27px; }
@@ -125,8 +125,6 @@ h2 { font-size: 31px; font-weight: 650; line-height: 1.2; letter-spacing: -.5px;
 @media (max-width: 1050px) {
   .page-width, .header-inner { width: calc(100% - 64px); }
   .hero-main { gap: 38px; }
-  .hero-bottom { gap: 18px; font-size: 11px; }
-  .hero-bottom > span + span { padding-left: 18px; }
   .work-preview { gap: 24px 30px; padding: 28px; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); }
   .work-copy h3 { font-size: 25px; }
   .work-aside { padding: 21px; }
@@ -146,15 +144,10 @@ h2 { font-size: 31px; font-weight: 650; line-height: 1.2; letter-spacing: -.5px;
   .hero-name { padding-top: 19px; }
   .technical-label { font-size: 10px; letter-spacing: .4px; }
   h1 { font-size: 44px; letter-spacing: -1.2px; margin: 15px 0; }
-  .hero-focus { font-size: 17px; max-width: 100%; }
   .hero-intro { border-top: 0; padding-top: 0; }
+  .hero-education { margin-top: 18px; }
+  .hero-education p { font-size: 11px; }
   .hero-intro p { font-size: 15px; line-height: 1.8; }
-  .hero-intro .text-link { margin-top: 20px; }
-  .hero-bottom { flex-wrap: wrap; gap: 8px 16px; padding: 15px 32px 15px 0; position: relative; font-size: 11px; }
-  .hero-bottom > span + span { border: 0; padding-left: 0; }
-  .hero-bottom > span:first-child { width: 100%; }
-  .hero-bottom > span:nth-child(2) { width: 100%; }
-  .hero-bottom a { position: absolute; right: 0; top: 34px; }
   h2 { font-size: 27px; letter-spacing: -.5px; }
   .selected-work { padding-top: 38px; padding-bottom: 40px; }
   .section-heading { flex-direction: column; align-items: start; gap: 12px; margin-bottom: 23px; }
@@ -218,16 +211,13 @@ h2 { font-size: 31px; font-weight: 650; line-height: 1.2; letter-spacing: -.5px;
   .page-width, .header-inner { width: 100%; max-width: none; }
   .site-header { position: static; background: none; }
   .header-inner { height: 38px; }
-  nav, .skip-link, .text-link, .detail-trigger, .close-story, .hero-bottom a, .site-footer a { display: none; }
+  nav, .skip-link, .text-link, .detail-trigger, .close-story, .site-footer a { display: none; }
   .hero { padding-top: 20px; }
   .hero-main { grid-template-columns: 1.1fr 1fr; gap: 24px; padding-bottom: 20px; }
   .hero-name { padding-top: 12px; }
   h1 { font-size: 28pt; margin: 12px 0; }
-  .hero-focus { font-size: 12pt; }
   .hero-intro { padding-top: 12px; border-top: 1px solid var(--line); }
   .hero-intro p { font-size: 10pt; line-height: 1.5; }
-  .hero-bottom { padding: 12px 0; font-size: 8pt; }
-  .hero-bottom > span:first-child, .hero-bottom > span:nth-child(2) { width: auto; }
   h2 { font-size: 18pt; }
   .selected-work { padding-block: 20px; }
   .section-heading { flex-direction: row; align-items: center; margin-bottom: 18px; }

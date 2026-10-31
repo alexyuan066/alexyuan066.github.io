@@ -10,7 +10,7 @@ Current: [paste the current paragraph]
 Replace with: [paste the new paragraph]
 ```
 
-[COPY_REVIEW.md](COPY_REVIEW.md) contains the current copy, including all four expanded work stories, with spaces for requested changes. You can copy sections into a message or edit the worksheet and return it. Editing the worksheet alone does not change the website; the approved replacements must be applied to the site files.
+[COPY_REVIEW.md](COPY_REVIEW.md) contains the annotated revision's copy, including all four expanded work stories, with spaces for requested changes. You can copy sections into a message or edit the worksheet and return it. Editing the worksheet alone does not change the website; the approved replacements must be applied to the site files.
 
 An annotated PDF is also practical. Use a PDF with every work entry expanded so the supporting stories are visible. Highlight the affected passage and attach a comment with the replacement text, or mark a deletion clearly. For layout feedback, name the section and describe the desired change. Include a short text note if handwriting or a comment is ambiguous. A PDF captures one layout and viewport; expansion behavior and mobile interactions should still be reviewed in the working site.
 
@@ -21,12 +21,13 @@ There is currently no CMS or browser-based text editor. Content is stored in pla
 | What to change | File |
 | --- | --- |
 | Work titles, context, dates, preview summaries, tags, supporting panels, expanded stories, and confidentiality note | `src/content.ts` |
-| Skills, public email, LinkedIn URL, and resume URL | `src/content.ts` |
-| Introduction, About paragraphs, Education and Contact labels/text, navigation, shared controls, and footer | `src/App.tsx` |
+| Introduction (`introduction`), About paragraphs (`aboutParagraphs`), name, and skills | `src/content.ts` |
+| Optional public email, phone, LinkedIn URL, and resume URL | `src/contact.json`; see [CONTACT.md](CONTACT.md) |
+| Education and Contact labels/text, navigation, shared controls, and footer | `src/App.tsx` |
 | Browser title and search description | `index.html` |
 | Colors, typography, spacing, and responsive layout | `src/styles.css` |
 
-Keep a string's surrounding quotes and the surrounding commas/brackets intact when editing `src/content.ts`. An apostrophe inside a single-quoted string needs escaping as `\'`, or use double quotes around that string. Missing email, LinkedIn, and resume destinations should stay `null` until the real address, URL, or file is supplied. See [ASSET_CHECKLIST.md](ASSET_CHECKLIST.md) for media, caption, attribution, and public-sharing requirements.
+Keep a string's surrounding quotes and the surrounding commas/brackets intact when editing `src/content.ts`. An apostrophe inside a single-quoted string needs escaping as `\'`, or use double quotes around that string. Keep unwanted or unavailable contact fields as empty strings (`""`) in `src/contact.json`. The contact values are public website information, not secrets; Alex can edit them directly without sending their values in chat. See [CONTACT.md](CONTACT.md) for the file format and self-editing steps, and [ASSET_CHECKLIST.md](ASSET_CHECKLIST.md) for media, caption, attribution, and public-sharing requirements.
 
 Run the site from the checkout:
 
@@ -47,34 +48,33 @@ Keep simulation results labeled as simulated, preliminary work labeled as prelim
 
 Saving or publishing a Codex environment configuration/snapshot makes that development setup reusable for future Codex work. It does not deploy this portfolio as a public website. The development preview is a separate way to inspect the working app.
 
-A public website needs a web host. No public deployment or custom domain has been configured for this portfolio, and no public site URL exists yet. A manual upload of the built site is the easiest initial route and does not require committing or pushing the source code first.
+A public version already exists at **https://alexyuan066.github.io/**, hosted by GitHub Pages from **`alexyuan066/alexyuan066.github.io`**. Its publishing source is already configured as **GitHub Actions**. This revision includes the annotated copy changes and `src/contact.json` setup. Verify publication through the workflow and the live site; saving files or building locally does not publish an update.
 
-## The easiest initial route: a Netlify manual upload
+## Updating the existing GitHub Pages site
 
-The build archive for this review is `/workspace/artifacts/portfolio-site.zip`. It contains the production files from `dist`, with `index.html` and the `assets` directory at the archive's top level. Netlify can host these static files without a GitHub connection.
+The existing `.github/workflows/deploy-pages.yml` workflow runs on pushes to `main` and can also be started manually from GitHub Actions. For an approved update:
 
-When Alex is ready to make the reviewed version public:
+1. Check the local changes and run the build and relevant tests.
+2. Commit and push the approved source changes to the existing repository's `main` branch. This triggers a public deployment; no separate Pages-source setup is needed.
+3. Wait for the Pages workflow to succeed. It installs locked dependencies with `npm ci`, builds with `npm run build`, and deploys `dist`.
+4. Refresh https://alexyuan066.github.io/ and check the updated wording, navigation, mobile layout, expanded stories, and any supplied downloads.
 
-1. Review the copy, confidentiality-sensitive material, resume/contact information, and media permissions.
-2. Download `portfolio-site.zip` and sign in to Netlify so the deployed site can be managed later.
-3. Use Netlify's manual deployment or Drop upload workflow. Upload the ZIP, or extract it and upload the folder that directly contains `index.html` and `assets`. Upload the built files, not the source-code checkout. If the upload interface requests a folder rather than a ZIP, use the extracted folder.
-4. Netlify deploys the files and shows a generated public address under `*.netlify.app`. The upload creates a public deployment; there is no separate publishing action required afterward.
-5. Check navigation, expanded stories, mobile layouts, and any supplied downloads at that address before sharing it.
+For the contact fields, follow [CONTACT.md](CONTACT.md) or open [the contact file editor](https://github.com/alexyuan066/alexyuan066.github.io/edit/main/src/contact.json). Editing that file on GitHub and committing to `main` uses the same automatic deployment workflow. There is no need to change React components or supply contact values in chat.
 
-You can edit the site name in Netlify's settings to change the assigned subdomain, subject to availability. For example, `alex-yuan-portfolio-example.netlify.app` illustrates the format only; it is not a live site, a reserved name, or an availability check. The actual URL will come from Netlify after upload.
+See [GITHUB_PAGES.md](GITHUB_PAGES.md) for the repository and deployment configuration. The GitHub Pages address stays the same after an update.
 
-For later changes, update the source, run `npm run build`, and upload a fresh archive or folder of the new `dist` contents to the same Netlify site. Manual deployment does not automatically publish source-file edits. Keep the source files separately; the build ZIP is an upload package, not a replacement for the editable project.
+## Optional alternative hosts
 
-## Git-based alternative: Vercel
+There is no need to move hosts to edit the existing portfolio. If Alex later chooses Netlify, a manual deployment can upload a fresh archive or folder of the built `dist` contents, with `index.html` and `assets` at the top level. That creates a public Netlify deployment; subsequent edits require a fresh build and upload unless Git integration is configured. An older exported ZIP does not automatically include later edits.
 
-If automatic deployments from GitHub are preferred later, Vercel is another suitable host for this static React/Vite site. The current checkout has no commits, so the reviewed code must first be committed and pushed to the intended repository. After public publication is approved, import that repository into Vercel, use the Vite preset with build command `npm run build` and output directory `dist`, and use a Node version compatible with the repository. The README records the validated version.
+Vercel is another optional Git-based host: import the saved repository, use the Vite preset with build command `npm run build` and output directory `dist`, and use a compatible Node version. Connecting a repository can start a public deployment immediately, and later commits can trigger deployments.
 
-Vercel provides an address under `*.vercel.app`; connecting a repository can start a deployment immediately. Subsequent commits can trigger deployments. No Vercel project or deployment has been created here.
+These alternatives assign addresses under `*.netlify.app` or `*.vercel.app`, respectively. No Netlify or Vercel deployment has been configured by this revision.
 
 ## Using your own URL
 
-A custom domain, such as a personal `.com` domain, is optional. You need to own the domain, either by purchasing an available one or using one you already control. Domain registration/renewal is separate from website hosting; no domain availability or pricing has been checked here.
+A purchased domain is not needed for the existing `alexyuan066.github.io` address, and that address needs no DNS edits. A separate custom domain, such as a personal `.com` domain, is optional. You would need to own it, either by purchasing an available domain or using one you already control. Domain registration/renewal is separate from website hosting; no custom-domain availability or pricing has been checked here.
 
-After deployment, add the domain in Netlify's domain settings, or the corresponding settings of the host you chose. The host provides the DNS instructions to follow at your domain registrar or DNS provider. Use those exact records, choose whether the main address uses the root domain or `www`, and let the host verify the connection and provision HTTPS after setup. DNS changes can take time to propagate. Keep the existing domain's email and other service records intact when making these changes.
+If a custom domain is chosen later, use GitHub Pages' custom-domain settings and its DNS instructions at the domain registrar or DNS provider. Follow the host's required records, choose whether the main address uses the root domain or `www`, and let the host verify the connection and provision HTTPS. DNS changes can take time to propagate. Keep the existing domain's email and other service records intact when making these changes.
 
-Text updates do not require buying another domain. The host serves the new build at the same connected domain after an approved deployment. Public deployment and domain/DNS changes should be performed only when Alex authorizes them; this guide has not performed either action.
+Text updates keep the same address after a successful deployment. Confirm the intended commit's workflow result and the live page before reporting an update as published. Routine text and contact edits require no domain/DNS changes.

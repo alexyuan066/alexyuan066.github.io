@@ -1,6 +1,10 @@
 import { useRef, useState } from 'react';
-import { profile, skillGroups, work } from './content';
+import { aboutParagraphs, introduction, profile, skillGroups, work } from './content';
 import type { WorkEntry } from './content';
+import contactConfig from './contact.json';
+import { parseContactConfig } from './contact-config';
+
+const contact = parseContactConfig(contactConfig);
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d={diagonal ? 'M6 18 18 6M6 6h12v12' : 'M4 12h15m-6-6 6 6-6 6'} stroke="currentColor" strokeWidth="1.5" /></svg>;
@@ -70,20 +74,19 @@ export default function App() {
       <main id="main">
         <section className="hero page-width" id="top" aria-labelledby="intro-title">
           <div className="hero-main">
-            <div className="hero-name"><p className="technical-label">Mechanical engineering · UConn</p><h1 id="intro-title">Alex Yuan</h1><p className="hero-focus">Mechanical design & product development</p></div>
-            <div className="hero-intro"><p>I’m a mechanical engineering student with experience in <strong>mechanical design, analysis, and testing.</strong></p><p>My work includes water-electrolysis hardware, preliminary system design, team engineering, and combustion research.</p><a className="text-link" href="#work">View selected work<Arrow /></a></div>
+            <div className="hero-name"><h1 id="intro-title">{profile.name}</h1><div className="hero-education"><p className="technical-label">University of Connecticut</p><p>B.S. Mechanical Engineering · Expected May 2027</p><p>3.87 GPA</p></div></div>
+            <div className="hero-intro" aria-labelledby="intro-about-title"><h2 id="intro-about-title">About Me</h2>{introduction.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
           </div>
-          <div className="hero-bottom"><span>University of Connecticut</span><span>B.S. Mechanical Engineering · Expected May 2027</span><span className="hero-gpa">3.87 GPA</span><a href="#work" aria-label="Scroll to selected work"><span aria-hidden="true">↓</span></a></div>
         </section>
         <section className="selected-work page-width" id="work" aria-labelledby="work-title">
           <div className="section-heading"><h2 id="work-title">Selected Work<span className="work-count">{String(work.length).padStart(2, '0')} entries</span></h2><p>Internship, senior design, team engineering, and research.</p></div>
           <div className="work-list">{work.map(entry => <WorkItem key={entry.id} entry={entry} />)}</div>
         </section>
         <section className="about-section" id="about" aria-labelledby="about-title">
-          <div className="page-width about-inner"><div className="about-title"><h2 id="about-title">About</h2></div><div className="about-copy"><p>I’m studying mechanical engineering at the University of Connecticut, with an interest in mechanical design and product development.</p><p>My experience includes comparing simulations with experimental data, checking designs with hand calculations, testing hardware, and contributing to technical reviews with engineering teams.</p><p>I’m interested in sustainability, clean technology, and renewable-energy hardware. These are directions I want to explore as I consider engineering roles, building on my experience in design, analysis, testing, and collaboration.</p></div><section className="skills" aria-labelledby="skills-title"><h2 id="skills-title">Technical Skills</h2><div className="skill-groups">{skillGroups.map(group => <div key={group.title}><h3>{group.title}</h3><p>{group.skills.join(' · ')}</p></div>)}</div></section></div>
+          <div className="page-width about-inner"><div className="about-title"><h2 id="about-title">About</h2></div><div className="about-copy">{aboutParagraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div><section className="skills" aria-labelledby="skills-title"><h2 id="skills-title">Technical Skills</h2><div className="skill-groups">{skillGroups.map(group => <div key={group.title}><h3>{group.title}</h3><p>{group.skills.join(' · ')}</p></div>)}</div></section></div>
         </section>
-        <section className="resume-section page-width" id="resume" aria-labelledby="resume-title"><div><h2 id="resume-title">Education</h2></div><div className="education"><h3>B.S. Mechanical Engineering</h3><p>University of Connecticut</p><div><span>Expected May 2027</span><span>GPA 3.87</span></div>{profile.resume ? <a className="text-link" href={profile.resume} download>Download resume (PDF)<Arrow diagonal /></a> : <p className="pending-note">Downloadable resume to be added.</p>}</div></section>
-        <section className="contact-section" id="contact" aria-labelledby="contact-title"><div className="page-width contact-inner"><div><h2 id="contact-title">Contact</h2><p>For opportunities in mechanical design and product development.</p></div><div className="contact-links">{profile.email && <a href={`mailto:${profile.email}`}>{profile.email}<Arrow diagonal /></a>}{profile.linkedIn && <a href={profile.linkedIn} target="_blank" rel="noreferrer">LinkedIn<Arrow diagonal /></a>}{!profile.email && !profile.linkedIn && <p className="contact-pending">Public contact details will be added here.</p>}</div></div></section>
+        <section className="resume-section page-width" id="resume" aria-labelledby="resume-title"><div><h2 id="resume-title">Education</h2></div><div className="education"><h3>B.S. Mechanical Engineering</h3><p>University of Connecticut</p><div><span>Expected May 2027</span><span>GPA 3.87</span></div>{contact.resume ? <a className="text-link" href={contact.resume} download>Download resume (PDF)<Arrow diagonal /></a> : <p className="pending-note">Downloadable resume to be added.</p>}</div></section>
+        <section className="contact-section" id="contact" aria-labelledby="contact-title"><div className="page-width contact-inner"><div><h2 id="contact-title">Contact</h2><p>For opportunities in mechanical design and product development.</p></div><div className="contact-links">{contact.emailHref && <a href={contact.emailHref}>{contact.email}<Arrow diagonal /></a>}{contact.phoneHref && <a href={contact.phoneHref}>{contact.phone}<Arrow diagonal /></a>}{contact.linkedIn && <a href={contact.linkedIn} target="_blank" rel="noreferrer">LinkedIn<Arrow diagonal /></a>}{!contact.email && !contact.phone && !contact.linkedIn && <p className="contact-pending">Public contact details will be added here.</p>}</div></div></section>
       </main>
       <footer className="site-footer page-width"><span>© {new Date().getFullYear()} Alex Yuan</span><span>Mechanical engineering · University of Connecticut</span><a href="#top">Back to top<span aria-hidden="true">↑</span></a></footer>
     </>

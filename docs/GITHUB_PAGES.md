@@ -1,24 +1,24 @@
-# Publish at alexyuan066.github.io
+# GitHub Pages: alexyuan066.github.io
 
-The root address `https://alexyuan066.github.io/` uses a GitHub Pages user-site repository named **`alexyuan066/alexyuan066.github.io`**. Keeping the current repository name, `alexyuan066/engineering-portfolio`, would normally give a project address of `https://alexyuan066.github.io/engineering-portfolio/` instead.
+The portfolio is live at **https://alexyuan066.github.io/** from the GitHub Pages user-site repository **`alexyuan066/alexyuan066.github.io`**. The former `engineering-portfolio` repository has already been renamed to this target; there is no repository-creation or rename step remaining.
 
-## Steps when you are ready to publish
+## Publish an approved update
 
-1. Choose the target repository: create `alexyuan066/alexyuan066.github.io`, or rename the current `engineering-portfolio` repository to `alexyuan066.github.io` in GitHub. Confirm the target before changing repository settings or the local remote.
-2. Review the public copy, especially the HyAxiom NDA material and metrics. Save the approved site code and the prepared `.github/workflows/deploy-pages.yml` workflow in the chosen repository's `main` branch by committing and pushing them. If the target repository changed, update the local Git remote to that target first.
-3. In the target repository, open **Settings → Pages** and select **GitHub Actions** as the source.
-4. Run the prepared Pages workflow from the repository's Actions area, or let a push to `main` trigger it. The workflow also supports a manual run. Its repository guard prevents deployment from the current `engineering-portfolio` repository; it is intended to deploy only from `alexyuan066/alexyuan066.github.io`.
-5. After the workflow succeeds, use the deployment link GitHub provides and check the site at `https://alexyuan066.github.io/`. Verify the four expandable stories, mobile layout, navigation, and any supplied downloads before sharing it.
+1. Review the revised copy and media, including the HyAxiom NDA material, metrics, and individual/team attribution. Run the build and relevant tests locally.
+2. Commit and push the approved source changes to `main` in `alexyuan066/alexyuan066.github.io`. A push triggers the existing `.github/workflows/deploy-pages.yml` workflow and publishes the update when it succeeds.
+3. Wait for the workflow's successful deployment, then check https://alexyuan066.github.io/. Verify the four expandable stories, mobile layout, navigation, updated wording, and any supplied downloads.
+
+The workflow also supports a manual run from the repository's Actions area. Its repository guard allows deployment only from `alexyuan066/alexyuan066.github.io`, so copying it into a differently named repository does not publish that copy. The publishing source is already set to **Settings → Pages → GitHub Actions**; no additional Pages-settings change is needed for routine updates.
 
 The workflow installs locked dependencies with `npm ci`, runs `npm run build`, and deploys the generated `dist` directory. Vite's default base path, `/`, suits this root address. A project deployment under `/engineering-portfolio/` would need its base path configured for that subdirectory.
 
-## Current status
+## Revision and deployment verification
 
-The restored site code is local and uncommitted. The existing remote points to `alexyuan066/engineering-portfolio` and returned no remote refs. Read access to that original repository works.
+The annotated-review revision includes the updated introduction, retained About section, reordered work entries, revised engineering stories, and self-editable contact fields in `src/contact.json`. The duplicate education/GPA strip below the introduction is removed.
 
-We could not confirm whether `alexyuan066/alexyuan066.github.io` already exists with the available access: its Git lookup returned “Repository not found,” and the GitHub API lookup was forbidden. These responses do not prove the repository is absent. Check your GitHub account before creating or renaming a repository.
+The renamed repository and GitHub API are accessible, and Pages reports `build_type: workflow`. To verify publication, check that the Pages workflow succeeds for the intended commit, then confirm the corresponding copy and layout on the live site. A local build or a pushed commit alone does not establish a successful deployment.
 
-No repository creation, rename, push, Pages-settings change, or public deployment has been performed. The desired public site address is not live as a result of this local setup.
+For direct self-editing of optional public contact details, see [CONTACT.md](CONTACT.md) and [the contact file editor](https://github.com/alexyuan066/alexyuan066.github.io/edit/main/src/contact.json). Committing an edit to `main` uses the existing automatic deployment workflow.
 
 ## Domain name
 

@@ -4,10 +4,10 @@ import type { AxeResults } from 'axe-core';
 
 const require = createRequire(import.meta.url);
 const entries = [
-  { id: 'manifold', title: 'Water-Electrolysis Manifold Redesign' },
   { id: 'ultrasonic', title: 'Ultrasonic Invasive-Plant Control' },
   { id: 'aiaa', title: 'Rocket Engineering & Team Leadership' },
   { id: 'combustion', title: 'Sustainable-Fuel Combustion Research' },
+  { id: 'manifold', title: 'Water-Electrolysis Manifold Redesign' },
 ];
 const browserErrors = new WeakMap<Page, string[]>();
 
@@ -77,6 +77,14 @@ test('navigation reaches real sections and all destinations are valid', async ({
     return [];
   }));
   expect(invalidDestinations).toEqual([]);
+});
+
+test('blank contact settings show no contact links or placeholder buttons', async ({ page }) => {
+  const contact = page.locator('#contact');
+  await expect(contact.locator('a[href^="mailto:"], a[href^="tel:"]')).toHaveCount(0);
+  await expect(contact.getByRole('link')).toHaveCount(0);
+  await expect(contact.getByRole('button')).toHaveCount(0);
+  await expect(contact.getByText('Public contact details will be added here.')).toBeVisible();
 });
 
 test('each work story expands accessibly and closes with focus and orientation restored', async ({ page }) => {
@@ -181,7 +189,7 @@ test('closing every mobile story returns focus to a fully visible trigger', asyn
 test('reduced motion removes smooth scrolling and long transitions', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
-  const transitionDuration = await page.locator('.hero-intro .text-link svg').evaluate(element => getComputedStyle(element).transitionDuration);
+  const transitionDuration = await page.locator('.detail-trigger').first().evaluate(element => getComputedStyle(element).transitionDuration);
   expect(transitionDuration.split(',').every(duration => Number.parseFloat(duration) <= 0.01)).toBe(true);
   await page.getByRole('navigation').getByRole('link', { name: 'Work', exact: true }).click();
   await expect(page).toHaveURL(/#work$/);
