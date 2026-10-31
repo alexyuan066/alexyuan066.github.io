@@ -19,7 +19,7 @@ export function parseContactConfig(input: unknown) {
   const digits = rawPhone?.replace(/[^\d+]/g, '') ?? '';
   const phone = rawPhone && /^\+?\d{7,15}$/.test(digits) ? rawPhone : null;
   const rawResume = text(config.resume);
-  const localResume = rawResume && /^\/(?!\/)[^\\\s?#]+\.pdf$/i.test(rawResume) ? rawResume : null;
+  const localResume = rawResume && /^\/(?!\/)[^\\\s?#]+\.(?:pdf|docx)$/i.test(rawResume) ? rawResume : null;
 
   return {
     email,

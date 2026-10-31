@@ -1,8 +1,10 @@
 import { test, expect, type Page } from '@playwright/test';
 import { createRequire } from 'node:module';
 import type { AxeResults } from 'axe-core';
+import { parseContactConfig } from '../src/contact-config';
 
 const require = createRequire(import.meta.url);
+const configuredContact = parseContactConfig(require('../src/contact.json'));
 const entries = [
   { id: 'ultrasonic', title: 'Ultrasonic Invasive-Plant Control' },
   { id: 'aiaa', title: 'Rocket Engineering & Team Leadership' },
@@ -79,12 +81,20 @@ test('navigation reaches real sections and all destinations are valid', async ({
   expect(invalidDestinations).toEqual([]);
 });
 
-test('blank contact settings show no contact links or placeholder buttons', async ({ page }) => {
+test('contact links match validated optional settings and LinkedIn opens in a new tab', async ({ page }) => {
   const contact = page.locator('#contact');
-  await expect(contact.locator('a[href^="mailto:"], a[href^="tel:"]')).toHaveCount(0);
-  await expect(contact.getByRole('link')).toHaveCount(0);
+  await expect(contact.locator('a[href^="mailto:"]')).toHaveCount(Number(Boolean(configuredContact.emailHref)));
+  await expect(contact.locator('a[href^="tel:"]')).toHaveCount(Number(Boolean(configuredContact.phoneHref)));
+  const linkedIn = contact.getByRole('link', { name: 'LinkedIn', exact: true });
+  await expect(linkedIn).toHaveCount(Number(Boolean(configuredContact.linkedIn)));
+  const linkCount = [configuredContact.emailHref, configuredContact.phoneHref, configuredContact.linkedIn].filter(Boolean).length;
+  await expect(contact.getByRole('link')).toHaveCount(linkCount);
   await expect(contact.getByRole('button')).toHaveCount(0);
-  await expect(contact.getByText('Public contact details will be added here.')).toBeVisible();
+  await expect(contact.locator('.contact-pending')).toHaveCount(linkCount === 0 ? 1 : 0);
+  if (configuredContact.linkedIn) {
+    await expect(linkedIn).toHaveAttribute('target', '_blank');
+    await expect(linkedIn).toHaveAttribute('rel', 'noreferrer');
+  }
 });
 
 test('each work story expands accessibly and closes with focus and orientation restored', async ({ page }) => {

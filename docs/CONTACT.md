@@ -23,10 +23,22 @@ The starting file is:
 
 - `email`: an email address, without a `mailto:` prefix. This creates a clickable email link.
 - `phone`: a phone number, optionally including a country code, spaces, parentheses, or hyphens. This creates a clickable telephone link. It is optional.
-- `linkedIn`: the full `https://` URL of your profile.
-- `resume`: leave blank until a real PDF is available. Upload your intended public PDF to `public/resume.pdf`, then set this value to `/resume.pdf`. A full HTTPS URL to a hosted resume is also accepted.
+- `linkedIn`: the full `https://` URL of your profile. The site's LinkedIn link opens in a new tab.
+- `resume`: leave blank until your intended public resume file is available. Local Word (`.docx`) and PDF files are supported; see the upload steps below. A full HTTPS URL to a hosted resume is also accepted.
 
 Keep the JSON quotes and commas intact. Empty or invalid values are not rendered as links. There is no need to edit the React components or run a server to make these changes on GitHub.
+
+## Upload a Word resume
+
+1. Name your file **`resume.docx`**.
+2. Open [the repository's public folder](https://github.com/alexyuan066/alexyuan066.github.io/tree/main/public) while signed in to GitHub. Choose **Add file → Upload files**, then upload `resume.docx` into that folder.
+3. Commit the upload to `main`. The file's repository path must be **`public/resume.docx`**.
+4. Open [the contact file editor](https://github.com/alexyuan066/alexyuan066.github.io/edit/main/src/contact.json) and change the `resume` field to **`"/resume.docx"`**. Keep the other fields as you want them and commit this edit to `main`.
+5. Wait for the latest GitHub Actions deployment to succeed, then refresh the website and check **Download resume**.
+
+The repository folder name `public` is omitted from the website URL: `public/resume.docx` is served as `/resume.docx`. Match the filename and capitalization exactly. Visitors can download the Word file; opening it depends on their browser and installed document viewer.
+
+A PDF also works: upload **`public/resume.pdf`** and set the field to **`"/resume.pdf"`** instead. Exporting the Word document to PDF is optional and can give visitors more consistent viewing across devices.
 
 ## What is public
 
