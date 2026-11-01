@@ -36,7 +36,14 @@ test('resume paths support PDF and Word files while rejecting other local file t
   for (const path of ['/resume.pdf', '/resume.docx', '/Alex-Yuan-Resume.DOCX']) {
     expect(parseContactConfig({ resume: path }).resume).toBe(path);
   }
-  for (const path of ['/resume.html', '/resume.docx.html', '//example.test/resume.docx', '/resume.docx?download=1']) {
+  for (const path of ['/Alex Yuan Resume.docx', '/Alex%20Yuan%20Resume.docx', ' /Alex Yuan Resume.docx ']) {
+    expect(parseContactConfig({ resume: path }).resume).toBe('/Alex%20Yuan%20Resume.docx');
+  }
+  for (const path of [
+    '/resume.html', '/resume.docx.html', '//example.test/resume.docx',
+    '/\\example.test/resume.docx', '/resume.docx?download=1', '/resume.docx#fragment',
+    '/Alex\tYuan Resume.docx', '/Alex\nYuan Resume.docx', '/Alex\rYuan Resume.docx',
+  ]) {
     expect(parseContactConfig({ resume: path }).resume).toBeNull();
   }
 });

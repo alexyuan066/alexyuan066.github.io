@@ -30,13 +30,17 @@ Keep the JSON quotes and commas intact. Empty or invalid values are not rendered
 
 ## Upload a Word resume
 
-1. Name your file **`resume.docx`**.
-2. Open [the repository's public folder](https://github.com/alexyuan066/alexyuan066.github.io/tree/main/public) while signed in to GitHub. Choose **Add file → Upload files**, then upload `resume.docx` into that folder.
-3. Commit the upload to `main`. The file's repository path must be **`public/resume.docx`**.
-4. Open [the contact file editor](https://github.com/alexyuan066/alexyuan066.github.io/edit/main/src/contact.json) and change the `resume` field to **`"/resume.docx"`**. Keep the other fields as you want them and commit this edit to `main`.
+1. Choose your Word document. You can keep its existing filename, including spaces; renaming is optional. `resume.docx` is just a simple example.
+2. Open [the repository's public folder](https://github.com/alexyuan066/alexyuan066.github.io/tree/main/public) while signed in to GitHub. Choose **Add file → Upload files**, then upload your document into that folder.
+3. Commit the upload to `main`. For example, a file named `resume.docx` has the repository path `public/resume.docx`.
+4. Open [the contact file editor](https://github.com/alexyuan066/alexyuan066.github.io/edit/main/src/contact.json) and set `resume` to `/` followed by the exact filename. For example, use **`"/resume.docx"`** for `resume.docx`. Keep the other fields as you want them and commit this edit to `main`.
 5. Wait for the latest GitHub Actions deployment to succeed, then refresh the website and check **Download resume**.
 
-The repository folder name `public` is omitted from the website URL: `public/resume.docx` is served as `/resume.docx`. Match the filename and capitalization exactly. Visitors can download the Word file; opening it depends on their browser and installed document viewer.
+The repository folder name `public` is omitted from the website URL: `public/resume.docx` is served as `/resume.docx`. Match the filename and capitalization exactly. Spaces are automatically encoded for the download URL; you can type them normally in the JSON value.
+
+For the uploaded **`Alex Yuan Resume.docx`**, the correct literal value is **`"/Alex Yuan Resume.docx"`**. There is no need to rename the file or replace spaces manually with `%20`.
+
+Visitors can download the Word file; opening it depends on their browser and installed document viewer.
 
 A PDF also works: upload **`public/resume.pdf`** and set the field to **`"/resume.pdf"`** instead. Exporting the Word document to PDF is optional and can give visitors more consistent viewing across devices.
 

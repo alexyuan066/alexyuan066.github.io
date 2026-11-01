@@ -1,5 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import { createRequire } from 'node:module';
+import { readFile } from 'node:fs/promises';
 import type { AxeResults } from 'axe-core';
 import { parseContactConfig } from '../src/contact-config';
 
@@ -95,6 +96,61 @@ test('contact links match validated optional settings and LinkedIn opens in a ne
     await expect(linkedIn).toHaveAttribute('target', '_blank');
     await expect(linkedIn).toHaveAttribute('rel', 'noreferrer');
   }
+});
+
+test('the resume link serves and downloads the configured local file exactly', async ({ page }) => {
+  test.skip(!configuredContact.resume?.startsWith('/'), 'No local resume is configured');
+  const resumeLink = page.locator('#resume').getByRole('link', { name: 'Download resume', exact: true });
+  await expect(resumeLink).toHaveCount(1);
+  await expect(resumeLink).toHaveAttribute('download', '');
+  const href = await resumeLink.getAttribute('href');
+  expect(href === configuredContact.resume, 'Resume link uses the validated configured path').toBe(true);
+  expect(Boolean(href?.startsWith('/') && !href.includes(' '))).toBe(true);
+  const resumeURL = new URL(href!, page.url());
+  const response = await page.request.get(resumeURL.href);
+  expect(response.status()).toBe(200);
+  const served = await response.body();
+  if (resumeURL.pathname.toLowerCase().endsWith('.docx')) {
+    expect(served.subarray(0, 4).equals(Buffer.from([0x50, 0x4b, 0x03, 0x04])), 'Resume is a Word ZIP package').toBe(true);
+  }
+  const original = await readFile(new URL(`../public${resumeURL.pathname}`, import.meta.url));
+  expect(served.equals(original), 'Served resume bytes match the uploaded file').toBe(true);
+
+  const downloadPromise = page.waitForEvent('download');
+  await resumeLink.click();
+  const download = await downloadPromise;
+  expect(await download.failure()).toBeNull();
+  const downloadedPath = await download.path();
+  expect(Boolean(downloadedPath)).toBe(true);
+  expect((await readFile(downloadedPath!)).equals(original), 'Downloaded resume bytes match the uploaded file').toBe(true);
+});
+
+test('the favicon loads the exact uploaded portrait without changing its image bytes', async ({ page }) => {
+  const icon = page.locator('link[rel="icon"]');
+  await expect(icon).toHaveCount(1);
+  await expect(icon).toHaveAttribute('type', 'image/svg+xml');
+  const href = await icon.getAttribute('href');
+  expect(Boolean(href?.includes('v=portrait-1'))).toBe(true);
+  const iconURL = new URL(href!, page.url()).href;
+  const response = await page.request.get(iconURL);
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('image/svg+xml');
+  const svg = (await response.body()).toString('utf8');
+  const encodedImage = svg.split('data:image/jpeg;base64,')[1]?.split(/["']/)[0] ?? '';
+  expect(encodedImage.length > 0).toBe(true);
+  const original = await readFile(new URL('../public/Alex Yuan - Professional Headshot Square.jpg', import.meta.url));
+  expect(Buffer.from(encodedImage, 'base64').equals(original), 'Favicon embeds the original portrait bytes exactly').toBe(true);
+  const hasVisiblePixels = await page.evaluate(async source => {
+    const image = new Image();
+    image.src = source;
+    await image.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 16;
+    const context = canvas.getContext('2d')!;
+    context.drawImage(image, 0, 0, 16, 16);
+    return context.getImageData(0, 0, 16, 16).data.some((value, index) => index % 4 === 3 && value > 0);
+  }, iconURL);
+  expect(hasVisiblePixels).toBe(true);
 });
 
 test('each work story expands accessibly and closes with focus and orientation restored', async ({ page }) => {
