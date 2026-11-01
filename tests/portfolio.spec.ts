@@ -125,45 +125,45 @@ test('the resume link serves and downloads the configured local file exactly', a
   expect((await readFile(downloadedPath!)).equals(original), 'Downloaded resume bytes match the uploaded file').toBe(true);
 });
 
-test('the favicon renders the navy and off-white AY mark without a photo', async ({ page }) => {
+test('the favicon uses the exact rounded PNG shared with the About photo', async ({ page }) => {
   const icon = page.locator('link[rel="icon"]');
   await expect(icon).toHaveCount(1);
-  await expect(icon).toHaveAttribute('type', 'image/svg+xml');
+  await expect(icon).toHaveAttribute('type', 'image/png');
   const href = await icon.getAttribute('href');
-  expect(Boolean(href?.includes('v=ay-1'))).toBe(true);
+  const photoSource = await page.locator('#about .about-photo').getAttribute('src');
+  expect(Boolean(href && photoSource)).toBe(true);
   const iconURL = new URL(href!, page.url()).href;
+  expect(iconURL === new URL(photoSource!, page.url()).href, 'About and favicon share the same original asset URL').toBe(true);
+  expect(decodeURIComponent(new URL(iconURL).pathname).endsWith('/Alex Yuan - Professional Headshot Square Rounded.png')).toBe(true);
   const response = await page.request.get(iconURL);
   expect(response.status()).toBe(200);
-  expect(response.headers()['content-type']).toContain('image/svg+xml');
-  const svg = (await response.body()).toString('utf8');
-  const mark = await page.evaluate(source => {
-    const document = new DOMParser().parseFromString(source, 'image/svg+xml');
-    return {
-      letters: document.querySelector('text')?.textContent?.trim(),
-      colors: [...document.querySelectorAll('[fill]')].map(element => element.getAttribute('fill')),
-      images: document.querySelectorAll('image').length,
-      embeddedPhoto: source.includes('data:image/'),
-    };
-  }, svg);
-  expect(mark.letters).toBe('AY');
-  expect(mark.colors).toEqual(expect.arrayContaining(['#20344a', '#f7f6f0']));
-  expect(mark.images).toBe(0);
-  expect(mark.embeddedPhoto).toBe(false);
+  expect(response.headers()['content-type']).toContain('image/png');
+  const served = await response.body();
+  expect(served.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))).toBe(true);
+  const original = await readFile(new URL(`../public${new URL(iconURL).pathname}`, import.meta.url));
+  expect(served.equals(original), 'Served PNG bytes match the uploaded original exactly').toBe(true);
   const rendered = await page.evaluate(async source => {
     const image = new Image();
     image.src = source;
     await image.decode();
     const canvas = document.createElement('canvas');
-    canvas.width = canvas.height = 16;
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
     const context = canvas.getContext('2d')!;
+    context.drawImage(image, 0, 0);
+    const corners = [[0, 0], [canvas.width - 1, 0], [0, canvas.height - 1], [canvas.width - 1, canvas.height - 1]];
+    const transparentCorners = corners.every(([x, y]) => context.getImageData(x, y, 1, 1).data[3] === 0);
+    // Browser downsampling can blend edge alpha, so inspect corners at native resolution.
+    canvas.width = canvas.height = 16;
     context.drawImage(image, 0, 0, 16, 16);
     const pixels = context.getImageData(0, 0, 16, 16).data;
     return {
+      square: image.naturalWidth === image.naturalHeight && image.naturalWidth > 0,
       visible: pixels.some((value, index) => index % 4 === 3 && value > 0),
-      lightLetters: pixels.some((value, index) => index % 4 === 0 && value > 200 && pixels[index + 1] > 200 && pixels[index + 2] > 200 && pixels[index + 3] > 0),
+      transparentCorners,
     };
   }, iconURL);
-  expect(rendered).toEqual({ visible: true, lightLetters: true });
+  expect(rendered).toEqual({ square: true, visible: true, transparentCorners: true });
 });
 
 test('page identity uses the plain AY home link and copy has no em dash characters', async ({ page }) => {

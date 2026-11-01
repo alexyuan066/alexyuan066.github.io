@@ -8,7 +8,7 @@ Review notes for this annotated revision:
 - The senior-design preview describes the purpose of ultrasonic control without implying proven treatment. Its current-status limitations remain explicit.
 - No actual combustion video was supplied, so the “see video below” reference is omitted until a real file can be added.
 - Contact details can be edited directly in `src/contact.json`; see `CONTACT.md`.
-- The About section reuses the square photo at `public/Alex Yuan - Professional Headshot Square.jpg`. The full image is displayed without cropping, a CSS frame, or rounded corners.
+- The About section and favicon use `public/Alex Yuan - Professional Headshot Square Rounded.png`. The supplied image contains its own rounded corners and is displayed in full without cropping or an added CSS frame.
 
 This worksheet records the copy included in Alex's annotated revision. Publication is verified through the Pages workflow for the intended commit and the corresponding content at https://alexyuan066.github.io/. Section labels such as “Preview” and “Requested changes” are worksheet labels, not new website text. Copy a section into a message and add replacement wording under its requested-changes space. Preserve factual qualifiers unless new evidence supports changing them.
 
