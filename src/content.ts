@@ -47,7 +47,7 @@ export const work: WorkEntry[] = [
     title: 'Ultrasonic Invasive-Plant Control',
     context: 'UConn / Windham Water Works · Senior Design Team Manager',
     dates: 'August 2026–present',
-    summary: 'Designing and fabricating an unmanned surface vehicle for ultrasonic control of invasive-plant growth. As Team Manager, I lead the translation of environmental constraints and acoustic requirements into a physical system architecture—leveraging mechanical conceptualization, applied research, and cross-functional stakeholder coordination.',
+    summary: 'Designing and fabricating an unmanned surface vehicle for ultrasonic control of invasive-plant growth. As Team Manager, I lead the translation of environmental constraints and acoustic requirements into a physical system architecture, using mechanical conceptualization, applied research, and cross-functional stakeholder coordination.',
     tags: ['System design', 'Literature research', 'Trade studies', 'Team coordination'],
     aside: { title: 'Current status', description: 'Ongoing, preliminary concept development: a stem-positioning grate paired with downward-facing ultrasonic transducers. We are currently finalizing the physical test apparatus design to transition into active hardware validation.' },
     sections: [

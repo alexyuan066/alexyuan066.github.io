@@ -26,6 +26,7 @@ There is currently no CMS or browser-based text editor. Content is stored in pla
 | Education and Contact labels/text, navigation, shared controls, and footer | `src/App.tsx` |
 | Browser title and search description | `index.html` |
 | Colors, typography, spacing, and responsive layout | `src/styles.css` |
+| About portrait | `public/Alex Yuan - Professional Headshot Square.jpg` |
 
 Keep a string's surrounding quotes and the surrounding commas/brackets intact when editing `src/content.ts`. An apostrophe inside a single-quoted string needs escaping as `\'`, or use double quotes around that string. Keep unwanted or unavailable contact fields as empty strings (`""`) in `src/contact.json`. The contact values are public website information, not secrets; Alex can edit them directly without sending their values in chat. See [CONTACT.md](CONTACT.md) for the file format and self-editing steps, and [ASSET_CHECKLIST.md](ASSET_CHECKLIST.md) for media, caption, attribution, and public-sharing requirements.
 
@@ -43,6 +44,12 @@ npm test
 ```
 
 Keep simulation results labeled as simulated, preliminary work labeled as preliminary, and recommendations distinct from implemented or tested changes. HyAxiom wording and metrics remain subject to Alex's confidentiality review.
+
+## Replace the About photo
+
+The About section reuses `public/Alex Yuan - Professional Headshot Square.jpg`. Keep this exact filename when replacing it with the intended square photo. Open [the public folder on GitHub](https://github.com/alexyuan066/alexyuan066.github.io/tree/main/public), upload the replacement at the same path, and commit to `main`. The existing workflow deploys the update; wait for it to succeed before checking the site.
+
+The square image displays in full without cropping, an added CSS frame, or rounded corners. No component or contact-file edits are needed to replace it. The header remains a plain `AY` home link, and the favicon uses `AY` in navy and off-white.
 
 ## What “publishing” means
 

@@ -7,7 +7,8 @@ Review notes for this annotated revision:
 - The adjective before “hardware” in the small top introduction was not fully readable. The revision uses the neutral wording “hardware and sustainable infrastructure” rather than guessing.
 - The senior-design preview describes the purpose of ultrasonic control without implying proven treatment. Its current-status limitations remain explicit.
 - No actual combustion video was supplied, so the “see video below” reference is omitted until a real file can be added.
-- Contact details remain blank and can be entered directly in `src/contact.json`; see `CONTACT.md`.
+- Contact details can be edited directly in `src/contact.json`; see `CONTACT.md`.
+- The About section reuses the square photo at `public/Alex Yuan - Professional Headshot Square.jpg`. The full image is displayed without cropping, a CSS frame, or rounded corners.
 
 This worksheet records the copy included in Alex's annotated revision. Publication is verified through the Pages workflow for the intended commit and the corresponding content at https://alexyuan066.github.io/. Section labels such as “Preview” and “Requested changes” are worksheet labels, not new website text. Copy a section into a message and add replacement wording under its requested-changes space. Preserve factual qualifiers unless new evidence supports changing them.
 
@@ -15,7 +16,7 @@ This worksheet records the copy included in Alex's annotated revision. Publicati
 
 Current text:
 
-- AY Alex Yuan
+- AY
 - Work
 - About
 - Resume
@@ -25,7 +26,7 @@ Current text:
 - Close details
 - Close story
 
-The detail controls are used on every work entry. Expanded stories show “Engineering details /” followed by the entry number, plus that entry's dates.
+The home link's accessible label is “Alex Yuan - home”. The detail controls are used on every work entry. Expanded stories show “Engineering details /” followed by the entry number, plus that entry's dates.
 
 Requested changes:
 
@@ -69,7 +70,7 @@ Requested changes:
 
 <!-- Add replacement wording or comments here. -->
 
-## 01 — Ultrasonic Invasive-Plant Control
+## 01 - Ultrasonic Invasive-Plant Control
 
 ### Preview
 
@@ -81,7 +82,7 @@ Ultrasonic Invasive-Plant Control
 
 UConn / Windham Water Works · Senior Design Team Manager
 
-Designing and fabricating an unmanned surface vehicle for ultrasonic control of invasive-plant growth. As Team Manager, I lead the translation of environmental constraints and acoustic requirements into a physical system architecture—leveraging mechanical conceptualization, applied research, and cross-functional stakeholder coordination.
+Designing and fabricating an unmanned surface vehicle for ultrasonic control of invasive-plant growth. As Team Manager, I lead the translation of environmental constraints and acoustic requirements into a physical system architecture, using mechanical conceptualization, applied research, and cross-functional stakeholder coordination.
 
 Tags:
 
@@ -126,7 +127,7 @@ Requested changes to expanded story:
 
 <!-- Add replacement wording or comments here. -->
 
-## 02 — Rocket Engineering & Team Leadership
+## 02 - Rocket Engineering & Team Leadership
 
 ### Preview
 
@@ -186,7 +187,7 @@ Requested changes to expanded story:
 
 <!-- Add replacement wording or comments here. -->
 
-## 03 — Sustainable-Fuel Combustion Research
+## 03 - Sustainable-Fuel Combustion Research
 
 ### Preview
 
@@ -235,7 +236,7 @@ Requested changes to expanded story:
 
 <!-- Add replacement wording or comments here. -->
 
-## 04 — Water-Electrolysis Manifold Redesign
+## 04 - Water-Electrolysis Manifold Redesign
 
 ### Preview
 
@@ -353,7 +354,7 @@ Expected May 2027
 
 GPA 3.87
 
-Downloadable resume to be added.
+Download resume
 
 Requested changes:
 
@@ -367,9 +368,7 @@ Contact
 
 For opportunities in mechanical design and product development.
 
-Public contact details will be added here.
-
-Public contact fields are currently blank. Follow [CONTACT.md](CONTACT.md) to edit them directly in `src/contact.json`; there is no need to send their values in chat.
+Contact links read their labels and destinations from `src/contact.json`; public contact values are not repeated in this worksheet. Follow [CONTACT.md](CONTACT.md) to edit them directly without sending their values in chat. The LinkedIn link opens in a new tab.
 
 Requested changes:
 
@@ -395,7 +394,7 @@ Requested changes:
 
 Current title:
 
-Alex Yuan — Mechanical Engineering
+Alex Yuan - Mechanical Engineering
 
 Current description:
 

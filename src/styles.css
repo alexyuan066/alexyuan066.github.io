@@ -8,6 +8,7 @@
   --paper: #f7f6f0;
   --stone: #ebeae1;
   --ink: #223830;
+  --navy: #20344a;
   --green: #3d542d;
   --muted: #535f54;
   --line: #b9c0ae;
@@ -30,8 +31,8 @@ svg { width: 22px; height: 22px; flex: 0 0 auto; }
 .technical-label { font: 500 11px/1.6 var(--mono); text-transform: uppercase; letter-spacing: .8px; color: var(--green); }
 .site-header { position: sticky; top: 0; background: rgba(247,246,240,.98); z-index: 20; border-bottom: 1px solid var(--line); }
 .header-inner { height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.brand { display: flex; gap: 12px; align-items: center; font-size: 14px; font-weight: 650; color: var(--ink); }
-.brand-portrait { display: block; width: 32px; height: 32px; flex: 0 0 32px; object-fit: cover; border: 1px solid var(--line); border-radius: 2px; }
+.brand { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; font-size: 24px; line-height: 1; font-weight: 700; letter-spacing: -.8px; color: var(--navy); }
+.brand::before { content: 'AY'; }
 nav { display: flex; gap: 30px; align-items: center; }
 nav a { font-size: 13px; font-weight: 500; padding-block: 13px; position: relative; display: flex; gap: 5px; align-items: center; }
 nav a::after { position: absolute; bottom: 7px; left: 0; content: ''; height: 1px; width: 0; background: var(--ink); transition: width .15s; }
@@ -98,6 +99,7 @@ h2 { font-size: 31px; font-weight: 650; line-height: 1.2; letter-spacing: -.5px;
 .close-story:hover { background: #e1e3da; }
 .about-section { background: var(--stone); border-block: 1px solid var(--line); padding: 52px 0; }
 .about-inner { display: grid; grid-template-columns: 1fr 2.1fr; gap: 42px; }
+.about-photo { display: block; width: 100%; max-width: 240px; height: auto; aspect-ratio: 1; object-fit: contain; margin-top: 24px; border: 0; border-radius: 0; box-shadow: none; }
 .about-copy p { font-size: 15px; line-height: 1.85; max-width: 780px; }
 .about-copy p + p { margin-top: 17px; }
 .skills { grid-column: 1/-1; border-top: 1px solid var(--line); padding-top: 33px; }
@@ -134,8 +136,7 @@ h2 { font-size: 31px; font-weight: 650; line-height: 1.2; letter-spacing: -.5px;
 @media (max-width: 760px) {
   .page-width, .header-inner { width: calc(100% - 40px); }
   .header-inner { height: 68px; gap: 10px; }
-  .brand { font-size: 13px; gap: 8px; }
-  .brand-portrait { width: 26px; height: 26px; flex-basis: 26px; }
+  .brand { font-size: 23px; }
   nav { gap: 19px; }
   nav a { font-size: 12px; }
   nav a svg { display: none; }
@@ -175,6 +176,7 @@ h2 { font-size: 31px; font-weight: 650; line-height: 1.2; letter-spacing: -.5px;
   .story-note { padding: 13px; font-size: 11px; }
   .about-section { padding-block: 36px; }
   .about-inner { grid-template-columns: 1fr; gap: 23px; }
+  .about-photo { margin: 22px auto 0; }
   .about-copy p { font-size: 14px; }
   .skills { padding-top: 25px; margin-top: 3px; }
   .skills h2 { font-size: 22px; }
@@ -195,8 +197,7 @@ h2 { font-size: 31px; font-weight: 650; line-height: 1.2; letter-spacing: -.5px;
 @media (max-width: 359px) {
   .page-width, .header-inner { width: calc(100% - 32px); }
   nav { gap: 13px; }
-  .brand { font-size: 12px; }
-  .brand-portrait { width: 24px; height: 24px; flex-basis: 24px; }
+  .brand { font-size: 22px; }
   .work-preview, .story { padding: 21px; }
   .work-copy h3 { font-size: 23px; }
   .work-aside { padding: 16px; }

@@ -68,7 +68,7 @@ export default function App() {
     <>
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="site-header"><div className="header-inner">
-        <a className="brand" href="#top" aria-label="Alex Yuan, back to top"><img className="brand-portrait" src="/Alex%20Yuan%20-%20Professional%20Headshot%20Square.jpg" alt="" width="32" height="32" decoding="async" /><span>Alex Yuan</span></a>
+        <a className="brand" href="#top" aria-label="Alex Yuan - home"><span className="sr-only">Alex Yuan - home</span></a>
         <nav aria-label="Main navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#resume">Resume</a><a href="#contact">Contact<Arrow diagonal /></a></nav>
       </div></header>
       <main id="main">
@@ -83,7 +83,7 @@ export default function App() {
           <div className="work-list">{work.map(entry => <WorkItem key={entry.id} entry={entry} />)}</div>
         </section>
         <section className="about-section" id="about" aria-labelledby="about-title">
-          <div className="page-width about-inner"><div className="about-title"><h2 id="about-title">About</h2></div><div className="about-copy">{aboutParagraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div><section className="skills" aria-labelledby="skills-title"><h2 id="skills-title">Technical Skills</h2><div className="skill-groups">{skillGroups.map(group => <div key={group.title}><h3>{group.title}</h3><p>{group.skills.join(' · ')}</p></div>)}</div></section></div>
+          <div className="page-width about-inner"><div className="about-title"><h2 id="about-title">About</h2><img className="about-photo" src="/Alex%20Yuan%20-%20Professional%20Headshot%20Square.jpg" alt="Alex Yuan" width="1000" height="1000" loading="lazy" decoding="async" /></div><div className="about-copy">{aboutParagraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div><section className="skills" aria-labelledby="skills-title"><h2 id="skills-title">Technical Skills</h2><div className="skill-groups">{skillGroups.map(group => <div key={group.title}><h3>{group.title}</h3><p>{group.skills.join(' · ')}</p></div>)}</div></section></div>
         </section>
         <section className="resume-section page-width" id="resume" aria-labelledby="resume-title"><div><h2 id="resume-title">Education</h2></div><div className="education"><h3>B.S. Mechanical Engineering</h3><p>University of Connecticut</p><div><span>Expected May 2027</span><span>GPA 3.87</span></div>{contact.resume ? <a className="text-link" href={contact.resume} download>Download resume<Arrow diagonal /></a> : <p className="pending-note">Downloadable resume to be added.</p>}</div></section>
         <section className="contact-section" id="contact" aria-labelledby="contact-title"><div className="page-width contact-inner"><div><h2 id="contact-title">Contact</h2><p>For opportunities in mechanical design and product development.</p></div><div className="contact-links">{contact.emailHref && <a href={contact.emailHref}>{contact.email}<Arrow diagonal /></a>}{contact.phoneHref && <a href={contact.phoneHref}>{contact.phone}<Arrow diagonal /></a>}{contact.linkedIn && <a href={contact.linkedIn} target="_blank" rel="noreferrer">LinkedIn<Arrow diagonal /></a>}{!contact.email && !contact.phone && !contact.linkedIn && <p className="contact-pending">Public contact details will be added here.</p>}</div></div></section>

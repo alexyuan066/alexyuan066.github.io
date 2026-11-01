@@ -125,22 +125,31 @@ test('the resume link serves and downloads the configured local file exactly', a
   expect((await readFile(downloadedPath!)).equals(original), 'Downloaded resume bytes match the uploaded file').toBe(true);
 });
 
-test('the favicon loads the exact uploaded portrait without changing its image bytes', async ({ page }) => {
+test('the favicon renders the navy and off-white AY mark without a photo', async ({ page }) => {
   const icon = page.locator('link[rel="icon"]');
   await expect(icon).toHaveCount(1);
   await expect(icon).toHaveAttribute('type', 'image/svg+xml');
   const href = await icon.getAttribute('href');
-  expect(Boolean(href?.includes('v=portrait-1'))).toBe(true);
+  expect(Boolean(href?.includes('v=ay-1'))).toBe(true);
   const iconURL = new URL(href!, page.url()).href;
   const response = await page.request.get(iconURL);
   expect(response.status()).toBe(200);
   expect(response.headers()['content-type']).toContain('image/svg+xml');
   const svg = (await response.body()).toString('utf8');
-  const encodedImage = svg.split('data:image/jpeg;base64,')[1]?.split(/["']/)[0] ?? '';
-  expect(encodedImage.length > 0).toBe(true);
-  const original = await readFile(new URL('../public/Alex Yuan - Professional Headshot Square.jpg', import.meta.url));
-  expect(Buffer.from(encodedImage, 'base64').equals(original), 'Favicon embeds the original portrait bytes exactly').toBe(true);
-  const hasVisiblePixels = await page.evaluate(async source => {
+  const mark = await page.evaluate(source => {
+    const document = new DOMParser().parseFromString(source, 'image/svg+xml');
+    return {
+      letters: document.querySelector('text')?.textContent?.trim(),
+      colors: [...document.querySelectorAll('[fill]')].map(element => element.getAttribute('fill')),
+      images: document.querySelectorAll('image').length,
+      embeddedPhoto: source.includes('data:image/'),
+    };
+  }, svg);
+  expect(mark.letters).toBe('AY');
+  expect(mark.colors).toEqual(expect.arrayContaining(['#20344a', '#f7f6f0']));
+  expect(mark.images).toBe(0);
+  expect(mark.embeddedPhoto).toBe(false);
+  const rendered = await page.evaluate(async source => {
     const image = new Image();
     image.src = source;
     await image.decode();
@@ -148,9 +157,51 @@ test('the favicon loads the exact uploaded portrait without changing its image b
     canvas.width = canvas.height = 16;
     const context = canvas.getContext('2d')!;
     context.drawImage(image, 0, 0, 16, 16);
-    return context.getImageData(0, 0, 16, 16).data.some((value, index) => index % 4 === 3 && value > 0);
+    const pixels = context.getImageData(0, 0, 16, 16).data;
+    return {
+      visible: pixels.some((value, index) => index % 4 === 3 && value > 0),
+      lightLetters: pixels.some((value, index) => index % 4 === 0 && value > 200 && pixels[index + 1] > 200 && pixels[index + 2] > 200 && pixels[index + 3] > 0),
+    };
   }, iconURL);
-  expect(hasVisiblePixels).toBe(true);
+  expect(rendered).toEqual({ visible: true, lightLetters: true });
+});
+
+test('page identity uses the plain AY home link and copy has no em dash characters', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(page).toHaveTitle('Alex Yuan - Mechanical Engineering');
+  const home = page.getByRole('link', { name: 'Alex Yuan - home', exact: true });
+  await expect(home).toBeVisible();
+  await expect(home).toHaveText('Alex Yuan - home');
+  const visibleMark = await home.evaluate(element => {
+    const value = getComputedStyle(element, '::before').content;
+    return value === 'none' || value === 'normal' ? '' : value.replace(/^["']|["']$/g, '');
+  });
+  expect(visibleMark).toBe('AY');
+  await expect(home.locator('img')).toHaveCount(0);
+  expect(await home.evaluate(element => {
+    const style = getComputedStyle(element);
+    return {
+      border: [style.borderTopWidth, style.borderRightWidth, style.borderBottomWidth, style.borderLeftWidth].every(value => value === '0px'),
+      square: style.borderRadius === '0px',
+      shadow: style.boxShadow === 'none',
+      transparent: style.backgroundColor === 'rgba(0, 0, 0, 0)',
+    };
+  })).toEqual({ border: true, square: true, shadow: true, transparent: true });
+  await page.getByRole('navigation').getByRole('link', { name: 'Work', exact: true }).click();
+  await home.click();
+  await expect(page).toHaveURL(/#top$/);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(100);
+  const prohibitedCharacterCounts = await page.evaluate(() => {
+    const hasCharacter = (value: string | null) => Boolean(value?.includes('\u2014'));
+    return {
+      title: Number(hasCharacter(document.title)),
+      copy: Number(hasCharacter(document.body.textContent)),
+      metadata: [...document.querySelectorAll('meta[content]')].filter(element => hasCharacter(element.getAttribute('content'))).length,
+      accessibility: [...document.querySelectorAll('*')].flatMap(element => [...element.attributes]).filter(attribute => attribute.name.startsWith('aria-') && hasCharacter(attribute.value)).length,
+      imageAlt: [...document.querySelectorAll('img[alt]')].filter(element => hasCharacter(element.getAttribute('alt'))).length,
+    };
+  });
+  expect(prohibitedCharacterCounts).toEqual({ title: 0, copy: 0, metadata: 0, accessibility: 0, imageAlt: 0 });
 });
 
 test('each work story expands accessibly and closes with focus and orientation restored', async ({ page }) => {
@@ -197,6 +248,32 @@ for (const width of [1440, 375, 320]) {
   test(`layout has no horizontal overflow at ${width}px, including all expanded stories`, async ({ page }) => {
     await page.setViewportSize({ width, height: width === 1440 ? 900 : 812 });
     await expectNoHorizontalOverflow(page);
+    const photo = page.locator('#about .about-photo');
+    await photo.scrollIntoViewIfNeeded();
+    await expect.poll(() => photo.evaluate(element => {
+      const image = element as HTMLImageElement;
+      return image.complete && image.naturalWidth > 0;
+    })).toBe(true);
+    const photoBox = (await photo.boundingBox())!;
+    const copyBox = (await page.locator('#about .about-copy').boundingBox())!;
+    expect(photoBox.width).toBeCloseTo(photoBox.height, 0);
+    expect(await photo.evaluate(element => {
+      const style = getComputedStyle(element);
+      return {
+        objectFit: style.objectFit,
+        borderRadius: style.borderRadius,
+        boxShadow: style.boxShadow,
+        borders: [style.borderTopWidth, style.borderRightWidth, style.borderBottomWidth, style.borderLeftWidth],
+        padding: style.padding,
+      };
+    })).toEqual({ objectFit: 'contain', borderRadius: '0px', boxShadow: 'none', borders: ['0px', '0px', '0px', '0px'], padding: '0px' });
+    if (width === 1440) {
+      expect(photoBox.x + photoBox.width).toBeLessThanOrEqual(copyBox.x);
+      expect(photoBox.y).toBeLessThan(copyBox.y + copyBox.height);
+      expect(photoBox.y + photoBox.height).toBeGreaterThan(copyBox.y);
+    } else {
+      expect(photoBox.y + photoBox.height).toBeLessThanOrEqual(copyBox.y);
+    }
     const entryStyles = await page.locator('.work-entry').evaluateAll(elements => elements.map(element => {
       const heading = getComputedStyle(element.querySelector('h3')!);
       const button = getComputedStyle(element.querySelector('.detail-trigger')!);

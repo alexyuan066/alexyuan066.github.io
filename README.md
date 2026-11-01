@@ -1,4 +1,4 @@
-# Alex Yuan — engineering portfolio
+# Alex Yuan - engineering portfolio
 
 React, TypeScript, and Vite portfolio with all four work stories expanding in place. The latest styling uses locally bundled IBM Plex Sans, forest/olive accents, and the supporting box before the details button on mobile.
 
@@ -24,6 +24,8 @@ Playwright uses `/usr/bin/chromium`; `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` can s
 ## Edit and review
 
 Work, skills, introduction, and About copy are in `src/content.ts`. Optional contact details and the resume destination are in `src/contact.json`; leave unused fields as empty strings. [Contact instructions](docs/CONTACT.md) explain how to enter them directly in GitHub without sending them in chat. Approved images go in `public/media/` with a source, accessible description, and caption. Browser printing includes every story, even when collapsed on screen.
+
+The About portrait reuses `public/Alex Yuan - Professional Headshot Square.jpg`. Replace that file with the intended square photo, keep the exact filename, and commit to `main` to trigger the existing deployment workflow. The image displays in full without cropping, a CSS frame, or rounded corners. The header uses plain `AY`, and the browser title is `Alex Yuan - Mechanical Engineering`.
 
 See [copy review](docs/COPY_REVIEW.md), [assets](docs/ASSET_CHECKLIST.md), and [editing and publishing](docs/EDITING_AND_PUBLISHING.md). The latest copy follows Alex's annotated review. The 30% HyAxiom flow improvement is simulated; gasket testing and 80% VBA savings are separate contributions. Senior design remains preliminary. Research now includes Alex's supplied LabVIEW, calibration, and mesh-modification details, and the AIAA story includes the jointly developed Simulink model.
 
