@@ -31,7 +31,7 @@ svg { width: 22px; height: 22px; flex: 0 0 auto; }
 .site-header { position: sticky; top: 0; background: rgba(247,246,240,.98); z-index: 20; border-bottom: 1px solid var(--line); }
 .header-inner { height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .brand { display: flex; gap: 12px; align-items: center; font-size: 14px; font-weight: 650; color: var(--ink); }
-.monogram { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--ink); font: 600 12px var(--mono); letter-spacing: -.5px; background: var(--ink); color: var(--paper); }
+.brand-portrait { display: block; width: 32px; height: 32px; flex: 0 0 32px; object-fit: cover; border: 1px solid var(--line); border-radius: 2px; }
 nav { display: flex; gap: 30px; align-items: center; }
 nav a { font-size: 13px; font-weight: 500; padding-block: 13px; position: relative; display: flex; gap: 5px; align-items: center; }
 nav a::after { position: absolute; bottom: 7px; left: 0; content: ''; height: 1px; width: 0; background: var(--ink); transition: width .15s; }
@@ -134,8 +134,8 @@ h2 { font-size: 31px; font-weight: 650; line-height: 1.2; letter-spacing: -.5px;
 @media (max-width: 760px) {
   .page-width, .header-inner { width: calc(100% - 40px); }
   .header-inner { height: 68px; gap: 10px; }
-  .brand { font-size: 13px; }
-  .monogram { display: none; }
+  .brand { font-size: 13px; gap: 8px; }
+  .brand-portrait { width: 26px; height: 26px; flex-basis: 26px; }
   nav { gap: 19px; }
   nav a { font-size: 12px; }
   nav a svg { display: none; }
@@ -196,6 +196,7 @@ h2 { font-size: 31px; font-weight: 650; line-height: 1.2; letter-spacing: -.5px;
   .page-width, .header-inner { width: calc(100% - 32px); }
   nav { gap: 13px; }
   .brand { font-size: 12px; }
+  .brand-portrait { width: 24px; height: 24px; flex-basis: 24px; }
   .work-preview, .story { padding: 21px; }
   .work-copy h3 { font-size: 23px; }
   .work-aside { padding: 16px; }

@@ -68,7 +68,7 @@ export default function App() {
     <>
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="site-header"><div className="header-inner">
-        <a className="brand" href="#top" aria-label="AY Alex Yuan, back to top"><span className="monogram" aria-hidden="true">AY</span>{' '}<span>Alex Yuan</span></a>
+        <a className="brand" href="#top" aria-label="Alex Yuan, back to top"><img className="brand-portrait" src="/Alex%20Yuan%20-%20Professional%20Headshot%20Square.jpg" alt="" width="32" height="32" decoding="async" /><span>Alex Yuan</span></a>
         <nav aria-label="Main navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#resume">Resume</a><a href="#contact">Contact<Arrow diagonal /></a></nav>
       </div></header>
       <main id="main">
