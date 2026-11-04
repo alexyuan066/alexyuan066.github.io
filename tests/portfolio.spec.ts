@@ -238,8 +238,13 @@ test('each work story expands accessibly and closes with focus and orientation r
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await expect(trigger).toBeFocused();
     await expect.poll(() => trigger.evaluate(element => {
-      const top = element.closest('.work-preview')!.getBoundingClientRect().top;
-      return top >= document.querySelector('header')!.getBoundingClientRect().bottom - 1 && top < window.innerHeight / 2;
+      const preview = element.closest('.work-preview')!.getBoundingClientRect();
+      const headerBottom = document.querySelector('header')!.getBoundingClientRect().bottom;
+      if (preview.height > window.innerHeight - headerBottom) {
+        const action = element.getBoundingClientRect();
+        return action.top >= headerBottom && action.bottom <= window.innerHeight;
+      }
+      return preview.top >= headerBottom - 1 && preview.top < window.innerHeight / 2;
     })).toBe(true);
   }
 });

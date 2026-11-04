@@ -21,7 +21,7 @@ const seniorDesignOrder = [
   '04-concept-2-alternative.png',
   '05-transducer-test-rig.png',
 ];
-const isTeamPhoto = (filename: string) => /^(?:06[-_\s]*)?team[-_\s]*(?:58|photo)(?:\b|[_\s-])/i.test(filename.replace(/\.[^.]+$/, ''));
+const isTeamPhoto = (filename: string) => /(?:^|[-_\s])team[-_\s]*(?:58|photo)(?:\b|[_\s-])/i.test(filename.replace(/\.[^.]+$/, ''));
 const text = (value: unknown) => typeof value === 'string'
   ? value.trim().replace(/\u2014/g, ' - ')
   : '';

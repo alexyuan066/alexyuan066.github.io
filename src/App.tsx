@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { aboutParagraphs, profile, skillGroups, work } from './content';
 import type { WorkEntry } from './content';
 import contactConfig from './contact.json';
@@ -52,7 +52,7 @@ function WorkItem({ entry }: { entry: WorkEntry }) {
         ) : (
           <div className="work-aside"><p className="aside-title">{entry.aside.title}</p><p>{entry.aside.description}</p></div>
         )}
-        {images.length > 0 && <ProjectGallery images={images} title={entry.title} featured={entry.id === 'ultrasonic'} />}
+        {images.length > 0 && <ProjectGallery images={images} title={entry.title} featured={entry.id === 'ultrasonic'} galleryId={`${entry.id}-images`} />}
         <button className="detail-trigger" ref={trigger} aria-expanded={expanded} aria-controls={`${entry.id}-story`} id={`${entry.id}-trigger`} onClick={() => expanded ? closeStory() : setExpanded(true)}>
           {expanded ? 'Close details' : 'View details'}<span className="plus" aria-hidden="true">{expanded ? '−' : '+'}</span><span className="sr-only">: {entry.title}</span>
         </button>
@@ -68,6 +68,20 @@ function WorkItem({ entry }: { entry: WorkEntry }) {
 }
 
 export default function App() {
+  useEffect(() => {
+    const fragment = window.location.hash;
+    if (!fragment) return;
+    let targetId: string;
+    try { targetId = decodeURIComponent(fragment.slice(1)); } catch { return; }
+    let cancelled = false;
+    void document.fonts.ready.then(() => requestAnimationFrame(() => {
+      if (!cancelled && window.location.hash === fragment) {
+        document.getElementById(targetId)?.scrollIntoView({ behavior: 'instant', block: 'start' });
+      }
+    }));
+    return () => { cancelled = true; };
+  }, []);
+
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>

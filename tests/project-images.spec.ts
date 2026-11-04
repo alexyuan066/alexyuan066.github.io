@@ -139,8 +139,8 @@ window.__projectCatalog = Object.fromEntries(['ultrasonic', 'aiaa', 'combustion'
       if (includeTeam) {
         await page.setContent('<!doctype html><html><body style="margin:0;background:#243a55"></body></html>');
         const teamPhoto = await page.screenshot({ type: 'jpeg', clip: { x: 0, y: 0, width: 1, height: 1 } });
-        fixtures.set('ultrasonic/Team 58.JPG', teamPhoto);
-        await writeFile(join(root, 'src/assets/projects/ultrasonic/Team 58.JPG'), teamPhoto);
+        fixtures.set('ultrasonic/ME_team58.jpg', teamPhoto);
+        await writeFile(join(root, 'src/assets/projects/ultrasonic/ME_team58.jpg'), teamPhoto);
       }
       server = await createServer({
         root,
@@ -159,12 +159,12 @@ window.__projectCatalog = Object.fromEntries(['ultrasonic', 'aiaa', 'combustion'
       const catalog: Catalog = await page.evaluate(() => (window as unknown as { __projectCatalog: Catalog }).__projectCatalog);
       expectCatalog(catalog, includeTeam);
       const filenames = (images: Catalog[string]) => images.map(image => decodeURIComponent(new URL(image.src, baseURL).pathname).split('/').at(-1));
-      expect(filenames(catalog.ultrasonic)).toEqual([...featuredImages.map(({ filename }) => filename), ...(includeTeam ? ['Team 58.JPG'] : [])]);
+      expect(filenames(catalog.ultrasonic)).toEqual([...featuredImages.map(({ filename }) => filename), ...(includeTeam ? ['ME_team58.jpg'] : [])]);
       expect(filenames(catalog.aiaa)).toEqual(['2 overview.PNG', '10_detail.png']);
 
       const transformed = await server.transformRequest('/src/project-images.ts');
       expect(Boolean(transformed), 'Real Vite glob transformation succeeds').toBe(true);
-      const allowedNames = [...featuredImages.map(({ filename }) => filename), '2 overview.PNG', '10_detail.png', '1_burner.PNG', ...(includeTeam ? ['Team 58.JPG'] : [])];
+      const allowedNames = [...featuredImages.map(({ filename }) => filename), '2 overview.PNG', '10_detail.png', '1_burner.PNG', ...(includeTeam ? ['ME_team58.jpg'] : [])];
       expect(allowedNames.every(filename => transformed!.code.includes(filename) || transformed!.code.includes(filename.replaceAll(' ', '%20')))).toBe(true);
       expect(['1_confidential-fixture.png', '1_unknown-fixture.png', '1_nested-fixture.png', '3_notes.txt'].filter(filename => transformed!.code.includes(filename)), 'Excluded files never enter the import graph').toEqual([]);
 

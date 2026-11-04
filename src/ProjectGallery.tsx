@@ -6,7 +6,7 @@ function ScrollArrow({ direction }: { direction: 'left' | 'right' }) {
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d={direction === 'left' ? 'M20 12H5m6-6-6 6 6 6' : 'M4 12h15m-6-6 6 6-6 6'} stroke="currentColor" strokeWidth="1.5" /></svg>;
 }
 
-export default function ProjectGallery({ images, title, featured = false }: { images: GalleryImage[]; title: string; featured?: boolean }) {
+export default function ProjectGallery({ images, title, featured = false, galleryId }: { images: GalleryImage[]; title: string; featured?: boolean; galleryId?: string }) {
   const identifier = useId();
   const stripId = `${identifier}-strip`;
   const titleId = `${identifier}-title`;
@@ -105,7 +105,7 @@ export default function ProjectGallery({ images, title, featured = false }: { im
   }
 
   return (
-    <section className={`project-gallery${featured ? ' is-featured' : ''}`} aria-label={`${title} images`} onKeyDown={event => {
+    <section id={galleryId} className={`project-gallery${featured ? ' is-featured' : ''}`} aria-label={`${title} images`} onKeyDown={event => {
       if (!featured || isOpen || images.length < 2) return;
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         event.preventDefault();

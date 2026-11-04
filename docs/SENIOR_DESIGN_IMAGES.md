@@ -11,9 +11,11 @@ The image metadata is already configured in `src/gallery-captions.json`:
 | 3 | `03-concept-5-sketch.png` | My treatment concept using a grate to position plant stems beneath downward-facing transducers. |
 | 4 | `04-concept-2-alternative.png` | Alternative channel-based treatment concept considered during design selection. Potential stem tangling was a concern. |
 | 5 | `05-transducer-test-rig.png` | Proposed adjustable test rig for positioning the transducer during plant-treatment experiments. Team CAD model. |
-| 6 | `06-team-photo.jpg`, or the original Team 58 photo filename | UConn senior design team, working with Windham Water Works. I am second from the left and serve as team manager. |
+| 6 | `ME_team58.jpg` | UConn senior design team, working with Windham Water Works. I am second from the left and serve as team manager. |
 
-The Team 58 filename is recognized without renaming and placed after the five concept images. Its metadata remains pending until an actual photo file exists. Metadata alone never creates an empty slide. If a different team-photo filename is used, confirm that exact filename before updating the mapping.
+All six original files have been supplied. The uploaded `ME_team58.jpg` filename is recognized without renaming and placed after the five concept images. Metadata alone never creates an empty slide. If a different team-photo filename is used later, confirm that exact filename before updating the mapping.
+
+The gallery can be linked directly at `https://alexyuan066.github.io/#ultrasonic-images`. GitHub Pages permits browser caching for up to ten minutes; after a deployment, a hard refresh or a new query string on the URL can request a fresh page immediately.
 
 Image 1 is the initial preview when supplied. The gallery preserves full image proportions with contain sizing on a neutral background. Images and captions can be browsed without expanding the description. Clicking an image opens the larger viewer, with previous/next controls, arrow-key navigation, Escape/Close, and focus restored to the triggering image.
 

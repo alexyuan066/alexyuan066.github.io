@@ -66,6 +66,23 @@ test.describe('project image galleries with test-only routed fixtures', () => {
     expect(browserErrors.get(page), 'Gallery browser and resource errors').toEqual([]);
   });
 
+  test('initial gallery fragment navigation reaches the mounted gallery below the sticky header', async ({ page }) => {
+    for (const width of [1440, 375, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/?v=gallery-fix#ultrasonic-images');
+      await page.evaluate(() => document.fonts.ready);
+      const gallery = page.locator('#ultrasonic-images');
+      await expect(gallery).toBeVisible();
+      await expect.poll(() => gallery.evaluate(element => {
+        const bounds = element.getBoundingClientRect();
+        const header = document.querySelector('header')!.getBoundingClientRect();
+        return bounds.top >= header.bottom - 1 && bounds.top < innerHeight;
+      })).toBe(true);
+      await expect(gallery.locator('.gallery-preview-controls .gallery-counter')).toHaveText('Image 1 of 8');
+      await expect(page.locator('#ultrasonic-story')).toBeHidden();
+    }
+  });
+
   test('dialog keyboard navigation preserves the inline story and returns focus to its thumbnail', async ({ page }) => {
     const work = entry(page, 'ultrasonic');
     await work.locator('.detail-trigger').click();
@@ -151,6 +168,14 @@ test.describe('project image galleries with test-only routed fixtures', () => {
       const work = entry(page, 'ultrasonic');
       const gallery = work.locator('.project-gallery');
       await gallery.scrollIntoViewIfNeeded();
+      for (const image of await page.locator('.gallery-thumbnail-image img').all()) {
+        expect(await image.evaluate(element => {
+          const image = element.getBoundingClientRect();
+          const frame = element.parentElement!.getBoundingClientRect();
+          return image.left >= frame.left && image.right <= frame.right
+            && image.top >= frame.top && image.bottom <= frame.bottom;
+        }), 'Thumbnail images stay inside their image frame and clear of captions').toBe(true);
+      }
       await expect(gallery).toHaveClass(/is-featured/);
       await expect(gallery.locator('.gallery-thumbnail')).toHaveCount(8);
       const preview = gallery.locator('.gallery-preview');
