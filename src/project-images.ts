@@ -14,6 +14,14 @@ const files = import.meta.glob<string>(
   { eager: true, query: '?url', import: 'default' },
 );
 const filenameOrder = new Intl.Collator('en', { numeric: true, sensitivity: 'base' });
+const seniorDesignOrder = [
+  '01-boat-cad-angled.png',
+  '02-boat-cad-underside.png',
+  '03-concept-5-sketch.png',
+  '04-concept-2-alternative.png',
+  '05-transducer-test-rig.png',
+];
+const isTeamPhoto = (filename: string) => /^(?:06[-_\s]*)?team[-_\s]*(?:58|photo)(?:\b|[_\s-])/i.test(filename.replace(/\.[^.]+$/, ''));
 const text = (value: unknown) => typeof value === 'string'
   ? value.trim().replace(/\u2014/g, ' - ')
   : '';
@@ -29,10 +37,23 @@ const readableFilename = (filename: string) => filename
 const imagesByProject: Record<string, GalleryImage[]> = Object.fromEntries(projectIds.map(projectId => {
   const images = Object.entries(files)
     .filter(([path]) => path.split('/').at(-2) === projectId)
-    .sort(([first], [second]) => filenameOrder.compare(first.split('/').at(-1)!, second.split('/').at(-1)!))
+    .sort(([first], [second]) => {
+      const firstName = first.split('/').at(-1)!;
+      const secondName = second.split('/').at(-1)!;
+      if (projectId === 'ultrasonic') {
+        const position = (name: string) => {
+          const index = seniorDesignOrder.indexOf(name);
+          return index >= 0 ? index : isTeamPhoto(name) ? 5 : 6;
+        };
+        const order = position(firstName) - position(secondName);
+        if (order) return order;
+      }
+      return filenameOrder.compare(firstName, secondName);
+    })
     .map(([path, src], index): GalleryImage => {
       const filename = path.split('/').at(-1)!;
-      const supplied = captions[projectId]?.[filename];
+      const supplied = captions[projectId]?.[filename]
+        ?? (projectId === 'ultrasonic' && isTeamPhoto(filename) ? captions.ultrasonic?.['06-team-photo.jpg'] : undefined);
       const metadata = supplied && typeof supplied === 'object' ? supplied as Record<string, unknown> : {};
       const fallback = readableFilename(filename) || `Image ${index + 1}`;
       return {

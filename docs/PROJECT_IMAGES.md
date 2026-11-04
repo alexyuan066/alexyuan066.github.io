@@ -20,6 +20,8 @@ HyAxiom has no image gallery. Do not upload confidential internship images or pr
 
 No gallery or missing-image placeholder appears before real images are uploaded. This workflow is for still images.
 
+Senior Design also has a featured image preview with a full caption, visible previous/next controls, an image count, and mobile swipe. Its gallery is available before expanding the engineering description. See [the Senior Design image list](SENIOR_DESIGN_IMAGES.md) for the exact filenames, order, and approved captions. Other project galleries retain the compact horizontal strip.
+
 ## Optional descriptions, captions, and credits
 
 Images appear without metadata. By default, the site makes readable text from each filename by removing the extension and numeric prefix and replacing hyphens or underscores with spaces. A useful filename is therefore better than a camera-generated name.

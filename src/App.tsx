@@ -52,7 +52,7 @@ function WorkItem({ entry }: { entry: WorkEntry }) {
         ) : (
           <div className="work-aside"><p className="aside-title">{entry.aside.title}</p><p>{entry.aside.description}</p></div>
         )}
-        {images.length > 0 && <ProjectGallery images={images} title={entry.title} />}
+        {images.length > 0 && <ProjectGallery images={images} title={entry.title} featured={entry.id === 'ultrasonic'} />}
         <button className="detail-trigger" ref={trigger} aria-expanded={expanded} aria-controls={`${entry.id}-story`} id={`${entry.id}-trigger`} onClick={() => expanded ? closeStory() : setExpanded(true)}>
           {expanded ? 'Close details' : 'View details'}<span className="plus" aria-hidden="true">{expanded ? '−' : '+'}</span><span className="sr-only">: {entry.title}</span>
         </button>

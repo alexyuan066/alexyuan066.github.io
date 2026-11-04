@@ -1,5 +1,30 @@
 {
-  "ultrasonic": {},
+  "ultrasonic": {
+    "01-boat-cad-angled.png": {
+      "alt": "Angled CAD view of the preliminary team boat concept. Modeled by a teammate.",
+      "caption": "Preliminary team boat concept. CAD modeled by a teammate."
+    },
+    "02-boat-cad-underside.png": {
+      "alt": "Underside CAD view of the preliminary boat concept, including the proposed grate and transducer arrangement.",
+      "caption": "Underside view of the preliminary boat concept, showing the proposed grate and transducer arrangement. CAD modeled by a teammate."
+    },
+    "03-concept-5-sketch.png": {
+      "alt": "Alex Yuan's Concept 5 sketch showing a grate positioning plant stems beneath downward-facing transducers.",
+      "caption": "My treatment concept using a grate to position plant stems beneath downward-facing transducers."
+    },
+    "04-concept-2-alternative.png": {
+      "alt": "Concept 2 top and side sketches of a channel-based treatment alternative, with the original drawing-app toolbar intact.",
+      "caption": "Alternative channel-based treatment concept considered during design selection. Potential stem tangling was a concern."
+    },
+    "05-transducer-test-rig.png": {
+      "alt": "Team CAD model of a proposed adjustable transducer test rig.",
+      "caption": "Proposed adjustable test rig for positioning the transducer during plant-treatment experiments. Team CAD model."
+    },
+    "06-team-photo.jpg": {
+      "alt": "UConn senior design team portrait. Alex Yuan is second from the left.",
+      "caption": "UConn senior design team, working with Windham Water Works. I am second from the left and serve as team manager."
+    }
+  },
   "aiaa": {},
   "combustion": {}
 }
