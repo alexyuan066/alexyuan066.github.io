@@ -17,6 +17,6 @@ All six original files have been supplied. The uploaded `ME_team58.jpg` filename
 
 The gallery can be linked directly at `https://alexyuan066.github.io/#ultrasonic-images`. GitHub Pages permits browser caching for up to ten minutes; after a deployment, a hard refresh or a new query string on the URL can request a fresh page immediately.
 
-Image 1 is the initial preview when supplied. The gallery preserves full image proportions with contain sizing on a neutral background. Images and captions can be browsed without expanding the description. Clicking an image opens the larger viewer, with previous/next controls, arrow-key navigation, Escape/Close, and focus restored to the triggering image.
+All six images appear in a small horizontal thumbnail strip with a total image count, using the same gallery layout as AIAA and research. The strip supports native touch scrolling and shows left/right scroll controls when it overflows. It is available without expanding the engineering description. A larger image appears only after clicking a thumbnail, with its full caption, previous/next controls, arrow-key navigation, Escape/Close, and focus restored to the triggering thumbnail. The larger viewer preserves full image proportions with contain sizing on a neutral background.
 
 These are preliminary concepts and proposed test equipment. The boat and test rig are teammate/team CAD, Concept 5 is Alex's contribution, and Concept 2 has neutral attribution. Do not describe these figures as completed or validated hardware.

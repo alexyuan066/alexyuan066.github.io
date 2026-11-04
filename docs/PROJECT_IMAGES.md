@@ -16,11 +16,11 @@ HyAxiom has no image gallery. Do not upload confidential internship images or pr
 2. Choose **Add file → Upload files** and add your approved images. Supported formats are `.jpg`, `.jpeg`, `.png`, `.webp`, and `.avif`, including uppercase extensions. Spaces in filenames work. Use web-sized files to keep loading lightweight.
 3. Use descriptive filenames. The gallery uses natural filename order; numeric prefixes such as `01-`, `02-`, and `03-` give you control over the sequence. Keep the exact filename when adding optional metadata below.
 4. Commit the upload to `main` and wait for the GitHub Pages workflow to succeed.
-5. Refresh the portfolio. The images appear in that work entry's compact image strip. Open a thumbnail for a larger view; use Previous/Next or the left/right arrow keys, and Close or Escape to return. The strip has left/right scroll controls when needed.
+5. Refresh the portfolio. The images appear in that work entry's small horizontal thumbnail strip with a total image count. Scroll naturally by touch; left/right scroll controls appear when the strip overflows. Click a thumbnail to open the larger image and its caption in a popup. Use Previous/Next or the left/right arrow keys, and Close or Escape to return.
 
 No gallery or missing-image placeholder appears before real images are uploaded. This workflow is for still images.
 
-Senior Design also has a featured image preview with a full caption, visible previous/next controls, an image count, and mobile swipe. Its gallery is available before expanding the engineering description. See [the Senior Design image list](SENIOR_DESIGN_IMAGES.md) for the exact filenames, order, and approved captions. Other project galleries retain the compact horizontal strip.
+Senior Design, AIAA, and research use the same compact strip. Large images appear only after a thumbnail is clicked; there is no large inline image. The strip is available before expanding the engineering description. See [the Senior Design image list](SENIOR_DESIGN_IMAGES.md) for its exact filenames, order, and approved captions.
 
 ## Optional descriptions, captions, and credits
 

@@ -4,7 +4,7 @@ Review notes for the current layout:
 
 - The hero's left column has Alex Yuan, At a Glance, the UConn degree/GPA facts, and the portrait. Its right column has the longer About Me copy.
 - The former short introduction and duplicate lower About section are removed. Technical Skills follows Selected Work.
-- Project image galleries appear only after authentic images are uploaded. See [PROJECT_IMAGES.md](PROJECT_IMAGES.md) for upload and optional caption instructions. HyAxiom has no gallery.
+- Senior Design, AIAA, and research share a small horizontal thumbnail strip with a total image count, native touch scrolling, and scroll controls when the strip overflows. A larger image and its caption open only after a thumbnail is clicked. Galleries appear only after authentic images are uploaded. See [PROJECT_IMAGES.md](PROJECT_IMAGES.md) for upload and optional caption instructions. HyAxiom has no gallery.
 - The senior-design preview describes the purpose of ultrasonic control without implying proven treatment. Its current-status limitations remain explicit.
 - No actual combustion video was supplied, so the “see video below” reference is omitted until a real file can be added.
 - Contact and resume destinations are configured in `src/contact.json`; their values are not repeated here. See [CONTACT.md](CONTACT.md).
