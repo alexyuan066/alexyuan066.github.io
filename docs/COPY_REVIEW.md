@@ -1,16 +1,16 @@
 # Portfolio copy review
 
-Review notes for this annotated revision:
+Review notes for the current layout:
 
-- The starred remarks are instructions and are not displayed on the website.
-- The duplicate education/GPA strip below the introduction is removed. Both rewritten About blocks are retained, as Alex confirmed.
-- The adjective before “hardware” in the small top introduction was not fully readable. The revision uses the neutral wording “hardware and sustainable infrastructure” rather than guessing.
+- The hero's left column has Alex Yuan, At a Glance, the UConn degree/GPA facts, and the portrait. Its right column has the longer About Me copy.
+- The former short introduction and duplicate lower About section are removed. Technical Skills follows Selected Work.
+- Project image galleries appear only after authentic images are uploaded. See [PROJECT_IMAGES.md](PROJECT_IMAGES.md) for upload and optional caption instructions. HyAxiom has no gallery.
 - The senior-design preview describes the purpose of ultrasonic control without implying proven treatment. Its current-status limitations remain explicit.
 - No actual combustion video was supplied, so the “see video below” reference is omitted until a real file can be added.
-- Contact details can be edited directly in `src/contact.json`; see `CONTACT.md`.
-- The About section and favicon use `public/Alex Yuan - Professional Headshot Square Rounded.png`. The supplied image contains its own rounded corners and is displayed in full without cropping or an added CSS frame.
+- Contact and resume destinations are configured in `src/contact.json`; their values are not repeated here. See [CONTACT.md](CONTACT.md).
+- The portrait and favicon use `public/Alex Yuan - Professional Headshot Square Rounded.png`. The supplied image contains its own rounded corners and is displayed in full without cropping or an added CSS frame.
 
-This worksheet records the copy included in Alex's annotated revision. Publication is verified through the Pages workflow for the intended commit and the corresponding content at https://alexyuan066.github.io/. Section labels such as “Preview” and “Requested changes” are worksheet labels, not new website text. Copy a section into a message and add replacement wording under its requested-changes space. Preserve factual qualifiers unless new evidence supports changing them.
+This worksheet records the current source copy. Publication is verified through the Pages workflow for the intended commit and the corresponding content at https://alexyuan066.github.io/. Section labels such as “Preview” and “Requested changes” are worksheet labels, not new website text. Copy a section into a message and add replacement wording under its requested-changes space. Preserve factual qualifiers unless new evidence supports changing them.
 
 ## Navigation and shared controls
 
@@ -32,11 +32,13 @@ Requested changes:
 
 <!-- Add replacement wording or comments here. -->
 
-## Introduction
+## Hero: At a Glance
 
 Current text:
 
 Alex Yuan
+
+At a Glance
 
 University of Connecticut
 
@@ -44,13 +46,21 @@ B.S. Mechanical Engineering · Expected May 2027
 
 3.87 GPA
 
+Requested changes:
+
+<!-- Add replacement wording or comments here. -->
+
+## Hero: About Me
+
+Current text:
+
 About Me
 
-I am a fast-tracked Mechanical Engineering student at the University of Connecticut, completing my B.S. in three years (Expected May 2027). My work connects hardware and sustainable infrastructure with conceptual R&D and physical manufacturing.
+I am a Mechanical Engineering student at the University of Connecticut completing my degree in just three years by May 2027. My academic and professional background is built on a strong foundation of mechanical design, physical prototyping, and hardware development.
 
-I am actively seeking 2027 engineering rotational programs across the U.S., as well as direct-hire mechanical design roles, with a strong interest in relocating to Colorado.
+My experience bridges conceptual research with physical manufacturing. I combine advanced CAD, fluid and structural simulation, physical hardware fabrication, and technical design reviews to solve complex engineering problems.
 
-I thrive on tackling complex challenges across the product lifecycle, bringing a strong foundation in mechanical design, cross-functional leadership, and hands-on testing and analysis.
+I am deeply passionate about clean energy technology and the global energy transition. I am actively seeking 2027 engineering rotational programs nationwide, as well as direct-hire mechanical design roles in major engineering hubs where I can work alongside driven, like-minded teams.
 
 Requested changes:
 
@@ -299,22 +309,6 @@ Confidentiality note:
 Company work is under NDA. No proprietary visuals or geometry are shown. The 30% flow improvement is a simulation result.
 
 Requested changes to expanded story:
-
-<!-- Add replacement wording or comments here. -->
-
-## About
-
-Current text:
-
-About
-
-I am a Mechanical Engineering student at the University of Connecticut completing my degree in just three years by May 2027. My academic and professional background is built on a strong foundation of mechanical design, physical prototyping, and hardware development.
-
-My experience bridges conceptual research with physical manufacturing. I combine advanced CAD, fluid and structural simulation, physical hardware fabrication, and technical design reviews to solve complex engineering problems.
-
-I am deeply passionate about clean energy technology and the global energy transition. I am actively seeking 2027 engineering rotational programs nationwide, as well as direct-hire mechanical design roles in major engineering hubs where I can work alongside driven, like-minded teams.
-
-Requested changes:
 
 <!-- Add replacement wording or comments here. -->
 

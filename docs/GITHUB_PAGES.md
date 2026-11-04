@@ -14,7 +14,7 @@ The workflow installs locked dependencies with `npm ci`, runs `npm run build`, a
 
 ## Revision and deployment verification
 
-The annotated-review revision includes the updated introduction, retained About section, reordered work entries, revised engineering stories, and self-editable contact fields in `src/contact.json`. The duplicate education/GPA strip below the introduction is removed.
+The current revision pairs At a Glance facts and the portrait with the longer About Me copy in the hero. The old short introduction and duplicate lower About section are removed. It also includes project-image galleries, revised work stories, and self-editable contact fields in `src/contact.json`. Technical Skills remains below Selected Work.
 
 The renamed repository and GitHub API are accessible, and Pages reports `build_type: workflow`. To verify publication, check that the Pages workflow succeeds for the intended commit, then confirm the corresponding copy and layout on the live site. A local build or a pushed commit alone does not establish a successful deployment.
 

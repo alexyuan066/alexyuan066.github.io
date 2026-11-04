@@ -21,12 +21,14 @@ There is currently no CMS or browser-based text editor. Content is stored in pla
 | What to change | File |
 | --- | --- |
 | Work titles, context, dates, preview summaries, tags, supporting panels, expanded stories, and confidentiality note | `src/content.ts` |
-| Introduction (`introduction`), About paragraphs (`aboutParagraphs`), name, and skills | `src/content.ts` |
+| Hero About Me paragraphs (`aboutParagraphs`), name, and skills | `src/content.ts` |
 | Optional public email, phone, LinkedIn URL, and resume URL | `src/contact.json`; see [CONTACT.md](CONTACT.md) |
 | Education and Contact labels/text, navigation, shared controls, and footer | `src/App.tsx` |
 | Browser title and search description | `index.html` |
 | Colors, typography, spacing, and responsive layout | `src/styles.css` |
-| About portrait and favicon | `public/Alex Yuan - Professional Headshot Square Rounded.png` |
+| At a Glance portrait and favicon | `public/Alex Yuan - Professional Headshot Square Rounded.png` |
+| Automatically discovered project images | `src/assets/projects/ultrasonic/`, `src/assets/projects/aiaa/`, or `src/assets/projects/combustion/`; see [PROJECT_IMAGES.md](PROJECT_IMAGES.md) |
+| Optional gallery descriptions, captions, and credits | `src/gallery-captions.json` |
 
 Keep a string's surrounding quotes and the surrounding commas/brackets intact when editing `src/content.ts`. An apostrophe inside a single-quoted string needs escaping as `\'`, or use double quotes around that string. Keep unwanted or unavailable contact fields as empty strings (`""`) in `src/contact.json`. The contact values are public website information, not secrets; Alex can edit them directly without sending their values in chat. See [CONTACT.md](CONTACT.md) for the file format and self-editing steps, and [ASSET_CHECKLIST.md](ASSET_CHECKLIST.md) for media, caption, attribution, and public-sharing requirements.
 
@@ -45,11 +47,13 @@ npm test
 
 Keep simulation results labeled as simulated, preliminary work labeled as preliminary, and recommendations distinct from implemented or tested changes. HyAxiom wording and metrics remain subject to Alex's confidentiality review.
 
-## Replace the About photo
+## Replace the portrait
 
-The About section and favicon use `public/Alex Yuan - Professional Headshot Square Rounded.png`. Keep this exact filename when replacing the photo later. Open [the public folder on GitHub](https://github.com/alexyuan066/alexyuan066.github.io/tree/main/public), upload the replacement at the same path, and commit to `main`. The existing workflow deploys the update; wait for it to succeed before checking the site.
+The hero's At a Glance column and the favicon use `public/Alex Yuan - Professional Headshot Square Rounded.png`. Keep this exact filename when replacing the photo later. Open [the public folder on GitHub](https://github.com/alexyuan066/alexyuan066.github.io/tree/main/public), upload the replacement at the same path, and commit to `main`. The existing workflow deploys the update; wait for it to succeed before checking the site.
 
-The supplied PNG contains its own rounded corners. It displays in full without cropping, an added CSS frame, or additional CSS rounding. No component or contact-file edits are needed to replace it at the same path. The header remains a plain `AY` home link; the favicon uses the same rounded photo as About.
+The supplied PNG contains its own rounded corners. It displays in full without cropping, an added CSS frame, or additional CSS rounding. No component or contact-file edits are needed to replace it at the same path. The header remains a plain `AY` home link; the favicon uses the same rounded photo.
+
+The longer About Me copy is now in the hero's right column, using `aboutParagraphs` from `src/content.ts`. The old short introduction and duplicate lower About section have been removed. Technical Skills remains below Selected Work.
 
 ## What “publishing” means
 

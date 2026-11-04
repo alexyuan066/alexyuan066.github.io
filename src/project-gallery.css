@@ -1,0 +1,49 @@
+.project-gallery { grid-area: gallery; min-width: 0; border-top: 1px solid var(--line); padding-top: 18px; }
+.gallery-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 13px; min-height: 36px; }
+.gallery-heading > p { font-size: 13px; font-weight: 600; color: var(--ink); }
+.gallery-heading > p span { margin-left: 10px; color: var(--muted); font: 400 11px var(--mono); }
+.gallery-scroll-controls { display: flex; gap: 7px; }
+.gallery-scroll-controls button { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--ink); }
+.gallery-scroll-controls svg { width: 17px; height: 17px; }
+.gallery-scroll-controls button:disabled { color: #788174; cursor: default; opacity: .65; }
+.gallery-strip { display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: 8px; scrollbar-width: thin; scrollbar-color: #7b826f transparent; padding: 8px 8px 12px; margin: -8px -8px 0; }
+.gallery-thumbnail { flex: 0 0 168px; min-width: 0; display: block; padding: 0; border: 1px solid var(--line); border-radius: 2px; background: var(--paper); color: var(--ink); text-align: left; scroll-snap-align: start; overflow: hidden; }
+.gallery-thumbnail:hover { border-color: var(--green); }
+.gallery-thumbnail-image { display: grid; place-items: center; width: 100%; height: 112px; padding: 6px; background: #e6e7df; }
+.gallery-thumbnail-image img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.gallery-thumbnail-caption { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 49px; padding: 9px 10px; font-size: 11px; line-height: 1.5; }
+.gallery-dialog { position: fixed; inset: 0; width: min(1120px, calc(100vw - 48px)); max-width: none; max-height: calc(100dvh - 48px); margin: auto; padding: 0; border: 1px solid var(--line); border-radius: 2px; background: var(--paper); color: var(--ink); overflow: auto; overscroll-behavior: contain; }
+.gallery-dialog::backdrop { background: rgba(22, 31, 28, .78); }
+.gallery-viewer { padding: 22px; }
+.gallery-viewer-heading { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 24px; align-items: start; padding-bottom: 17px; border-bottom: 1px solid var(--line); }
+.gallery-viewer-heading h2 { font-size: 20px; line-height: 1.4; letter-spacing: -.2px; }
+.gallery-close, .gallery-viewer-controls button { min-height: 40px; border: 1px solid var(--green); border-radius: 0; padding: 8px 13px; background: transparent; color: var(--ink); font-size: 12px; font-weight: 600; }
+.gallery-close:hover, .gallery-viewer-controls button:hover { background: var(--stone); }
+.gallery-enlarged { margin-top: 18px; }
+.gallery-enlarged > img { display: block; width: 100%; height: auto; max-height: max(120px, calc(100dvh - 285px)); object-fit: contain; }
+.gallery-enlarged figcaption { padding-top: 14px; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+.gallery-credit { margin-top: 4px; font-size: 11px; color: var(--muted); }
+.gallery-viewer-controls { display: flex; justify-content: center; align-items: center; gap: 22px; margin-top: 19px; border-top: 1px solid var(--line); padding-top: 17px; }
+.gallery-counter { color: var(--muted); font: 400 11px/1.5 var(--mono); text-align: center; }
+@media (max-width: 760px) {
+  .gallery-thumbnail { flex-basis: 142px; }
+  .gallery-thumbnail-image { height: 98px; }
+  .gallery-strip { gap: 11px; }
+  .gallery-scroll-controls button { width: 40px; height: 40px; }
+  .gallery-dialog { width: calc(100vw - 24px); max-height: calc(100dvh - 24px); }
+  .gallery-viewer { padding: 14px; }
+  .gallery-viewer-heading { gap: 12px; padding-bottom: 13px; }
+  .gallery-viewer-heading h2 { font-size: 16px; }
+  .gallery-close, .gallery-viewer-controls button { min-height: 44px; padding-inline: 11px; }
+  .gallery-enlarged > img { max-height: max(100px, calc(100dvh - 330px)); }
+  .gallery-enlarged figcaption { font-size: 12px; }
+  .gallery-viewer-controls { gap: 14px; }
+  .gallery-counter { font-size: 10px; }
+}
+@media print {
+  .gallery-scroll-controls, .gallery-dialog { display: none !important; }
+  .gallery-strip { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; overflow: visible; padding: 0; margin: 0; }
+  .gallery-thumbnail { break-inside: avoid; }
+  .gallery-thumbnail-caption { display: block; min-height: 0; }
+  .project-gallery { break-inside: avoid; }
+}

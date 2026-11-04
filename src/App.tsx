@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react';
-import { aboutParagraphs, introduction, profile, skillGroups, work } from './content';
+import { aboutParagraphs, profile, skillGroups, work } from './content';
 import type { WorkEntry } from './content';
 import contactConfig from './contact.json';
 import { parseContactConfig } from './contact-config';
+import ProjectGallery from './ProjectGallery';
+import { getProjectImages } from './project-images';
 
 const contact = parseContactConfig(contactConfig);
 
@@ -14,6 +16,7 @@ function WorkItem({ entry }: { entry: WorkEntry }) {
   const [expanded, setExpanded] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const preview = useRef<HTMLDivElement>(null);
+  const images = getProjectImages(entry.id);
 
   function closeStory() {
     const top = preview.current?.getBoundingClientRect().top ?? 0;
@@ -32,7 +35,7 @@ function WorkItem({ entry }: { entry: WorkEntry }) {
 
   return (
     <article className={`work-entry ${expanded ? 'is-expanded' : ''}`}>
-      <div className="work-preview" ref={preview}>
+      <div className={`work-preview${images.length ? ' has-gallery' : ''}`} ref={preview}>
         <div className="work-copy">
           <div className="entry-meta"><span className="entry-number">{entry.number}</span><span>{entry.dates}</span></div>
           <h3>{entry.title}</h3>
@@ -49,6 +52,7 @@ function WorkItem({ entry }: { entry: WorkEntry }) {
         ) : (
           <div className="work-aside"><p className="aside-title">{entry.aside.title}</p><p>{entry.aside.description}</p></div>
         )}
+        {images.length > 0 && <ProjectGallery images={images} title={entry.title} />}
         <button className="detail-trigger" ref={trigger} aria-expanded={expanded} aria-controls={`${entry.id}-story`} id={`${entry.id}-trigger`} onClick={() => expanded ? closeStory() : setExpanded(true)}>
           {expanded ? 'Close details' : 'View details'}<span className="plus" aria-hidden="true">{expanded ? '−' : '+'}</span><span className="sr-only">: {entry.title}</span>
         </button>
@@ -73,17 +77,17 @@ export default function App() {
       </div></header>
       <main id="main">
         <section className="hero page-width" id="top" aria-labelledby="intro-title">
-          <div className="hero-main">
-            <div className="hero-name"><h1 id="intro-title">{profile.name}</h1><div className="hero-education"><p className="technical-label">University of Connecticut</p><p>B.S. Mechanical Engineering · Expected May 2027</p><p>3.87 GPA</p></div></div>
-            <div className="hero-intro" aria-labelledby="intro-about-title"><h2 id="intro-about-title">About Me</h2>{introduction.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
+          <div className="hero-main" id="about">
+            <div className="hero-name"><h1 id="intro-title">{profile.name}</h1><h2>At a Glance</h2><div className="hero-education"><p className="technical-label">University of Connecticut</p><p>B.S. Mechanical Engineering · Expected May 2027</p><p>3.87 GPA</p></div><img className="about-photo" src="/Alex%20Yuan%20-%20Professional%20Headshot%20Square%20Rounded.png" alt="Alex Yuan" width="1000" height="1000" decoding="async" /></div>
+            <div className="hero-intro about-copy" aria-labelledby="about-title"><h2 id="about-title">About Me</h2>{aboutParagraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
           </div>
         </section>
         <section className="selected-work page-width" id="work" aria-labelledby="work-title">
           <div className="section-heading"><h2 id="work-title">Selected Work<span className="work-count">{String(work.length).padStart(2, '0')} entries</span></h2><p>Internship, senior design, team engineering, and research.</p></div>
           <div className="work-list">{work.map(entry => <WorkItem key={entry.id} entry={entry} />)}</div>
         </section>
-        <section className="about-section" id="about" aria-labelledby="about-title">
-          <div className="page-width about-inner"><div className="about-title"><h2 id="about-title">About</h2><img className="about-photo" src="/Alex%20Yuan%20-%20Professional%20Headshot%20Square%20Rounded.png" alt="Alex Yuan" width="1000" height="1000" loading="lazy" decoding="async" /></div><div className="about-copy">{aboutParagraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div><section className="skills" aria-labelledby="skills-title"><h2 id="skills-title">Technical Skills</h2><div className="skill-groups">{skillGroups.map(group => <div key={group.title}><h3>{group.title}</h3><p>{group.skills.join(' · ')}</p></div>)}</div></section></div>
+        <section className="skills-section" aria-labelledby="skills-title">
+          <div className="page-width skills"><h2 id="skills-title">Technical Skills</h2><div className="skill-groups">{skillGroups.map(group => <div key={group.title}><h3>{group.title}</h3><p>{group.skills.join(' · ')}</p></div>)}</div></div>
         </section>
         <section className="resume-section page-width" id="resume" aria-labelledby="resume-title"><div><h2 id="resume-title">Education</h2></div><div className="education"><h3>B.S. Mechanical Engineering</h3><p>University of Connecticut</p><div><span>Expected May 2027</span><span>GPA 3.87</span></div>{contact.resume ? <a className="text-link" href={contact.resume} download>Download resume<Arrow diagonal /></a> : <p className="pending-note">Downloadable resume to be added.</p>}</div></section>
         <section className="contact-section" id="contact" aria-labelledby="contact-title"><div className="page-width contact-inner"><div><h2 id="contact-title">Contact</h2><p>For opportunities in mechanical design and product development.</p></div><div className="contact-links">{contact.emailHref && <a href={contact.emailHref}>{contact.email}<Arrow diagonal /></a>}{contact.phoneHref && <a href={contact.phoneHref}>{contact.phone}<Arrow diagonal /></a>}{contact.linkedIn && <a href={contact.linkedIn} target="_blank" rel="noreferrer">LinkedIn<Arrow diagonal /></a>}{!contact.email && !contact.phone && !contact.linkedIn && <p className="contact-pending">Public contact details will be added here.</p>}</div></div></section>

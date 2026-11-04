@@ -28,12 +28,6 @@ export const profile = {
   name: 'Alex Yuan',
 };
 
-export const introduction = [
-  'I am a fast-tracked Mechanical Engineering student at the University of Connecticut, completing my B.S. in three years (Expected May 2027). My work connects hardware and sustainable infrastructure with conceptual R&D and physical manufacturing.',
-  'I am actively seeking 2027 engineering rotational programs across the U.S., as well as direct-hire mechanical design roles, with a strong interest in relocating to Colorado.',
-  'I thrive on tackling complex challenges across the product lifecycle, bringing a strong foundation in mechanical design, cross-functional leadership, and hands-on testing and analysis.',
-];
-
 export const aboutParagraphs = [
   'I am a Mechanical Engineering student at the University of Connecticut completing my degree in just three years by May 2027. My academic and professional background is built on a strong foundation of mechanical design, physical prototyping, and hardware development.',
   'My experience bridges conceptual research with physical manufacturing. I combine advanced CAD, fluid and structural simulation, physical hardware fabrication, and technical design reviews to solve complex engineering problems.',

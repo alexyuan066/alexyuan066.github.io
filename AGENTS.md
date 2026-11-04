@@ -4,4 +4,7 @@
 - Keep the About photo square and uncropped. Use `public/Alex Yuan - Professional Headshot Square Rounded.png` for About and the browser favicon so Alex can replace the file directly in GitHub. Do not add a decorative frame, border, shadow, or CSS rounded crop; the rounded corners are part of the uploaded image.
 - Use a plain AY text mark for the header home link, with the accessible label `Alex Yuan - home`.
 - Use the title `Alex Yuan - Mechanical Engineering` and the rounded portrait as the browser favicon. Keep the plain AY mark in the website header.
+- Keep one About Me block at the top. The left column has Alex Yuan, a larger At a Glance heading, education facts, and the uncropped portrait; the right column uses the longer About copy. Technical Skills remains below Selected Work.
+- Project image uploads belong in `src/assets/projects/ultrasonic`, `src/assets/projects/aiaa`, and `src/assets/projects/combustion`. Preserve automatic discovery, horizontal thumbnails, accessible full-image viewing, and the image-free HyAxiom internship entry. Do not invent project imagery.
 - Preserve inline work expansion, factual qualifiers, confidentiality boundaries, and the existing content organization when making routine visual changes.
+- The next visual redesign needs Alex's review and approval before implementation. Finish publishing the already-approved At a Glance, About Me, and project gallery work first. Keep the existing public site's visibility unchanged; do not publicly deploy a new design proposal without approval.

@@ -169,6 +169,22 @@ test('the favicon uses the exact rounded PNG shared with the About photo', async
 test('page identity uses the plain AY home link and copy has no em dash characters', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(page).toHaveTitle('Alex Yuan - Mechanical Engineering');
+  const hero = page.locator('#top');
+  const name = hero.getByRole('heading', { level: 1, name: 'Alex Yuan', exact: true });
+  const glance = hero.getByRole('heading', { level: 2, name: 'At a Glance', exact: true });
+  await expect(glance).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'About Me', exact: true })).toHaveCount(1);
+  await expect(hero.locator('.about-copy p')).toHaveCount(3);
+  await expect(hero.locator('.about-copy')).toContainText('My experience bridges conceptual research with physical manufacturing.');
+  await expect(page.locator('.about-section')).toHaveCount(0);
+  await expect(page.locator('.skills-section')).toHaveCount(1);
+  const nameSize = await name.evaluate(element => Number.parseFloat(getComputedStyle(element).fontSize));
+  const glanceSize = await glance.evaluate(element => Number.parseFloat(getComputedStyle(element).fontSize));
+  expect(nameSize).toBeLessThan(glanceSize);
+  expect(await page.evaluate(() => {
+    const sections = ['#top', '#work', '.skills-section', '#resume'].map(selector => document.querySelector(selector)!);
+    return sections.every((section, index) => index === 0 || Boolean(sections[index - 1].compareDocumentPosition(section) & Node.DOCUMENT_POSITION_FOLLOWING));
+  }), 'Hero, work, skills, and education appear in that order').toBe(true);
   const home = page.getByRole('link', { name: 'Alex Yuan - home', exact: true });
   await expect(home).toBeVisible();
   await expect(home).toHaveText('Alex Yuan - home');
