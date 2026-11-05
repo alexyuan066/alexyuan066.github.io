@@ -87,7 +87,7 @@ export default function App() {
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="site-header"><div className="header-inner">
         <a className="brand" href="#top" aria-label="Alex Yuan - home"><span className="sr-only">Alex Yuan - home</span></a>
-        <nav aria-label="Main navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#resume">Resume</a><a href="#contact">Contact<Arrow diagonal /></a></nav>
+        <nav aria-label="Main navigation"><a href="#about">At a Glance</a><a href="#work">Work</a><a href="#resume">Resume</a><a href="#contact">Contact<Arrow diagonal /></a></nav>
       </div></header>
       <main id="main">
         <section className="hero page-width" id="top" aria-labelledby="intro-title">

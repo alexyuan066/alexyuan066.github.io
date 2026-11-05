@@ -61,7 +61,9 @@ async function expectAccessible(page: Page) {
 
 test('navigation reaches real sections and all destinations are valid', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const [name, id] of [['Work', 'work'], ['About', 'about'], ['Resume', 'resume'], ['Contact', 'contact']]) {
+  const destinations = [['At a Glance', 'about'], ['Work', 'work'], ['Resume', 'resume'], ['Contact', 'contact']];
+  await expect(page.getByRole('navigation').getByRole('link')).toHaveText(destinations.map(([name]) => name));
+  for (const [name, id] of destinations) {
     await page.getByRole('navigation').getByRole('link', { name, exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`#${id}$`));
     await expect.poll(async () => page.locator(`#${id}`).evaluate(element => {
