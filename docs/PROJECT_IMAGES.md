@@ -14,13 +14,13 @@ HyAxiom has no image gallery. Do not upload confidential internship images or pr
 
 1. Open the matching folder above while signed in to GitHub.
 2. Choose **Add file → Upload files** and add your approved images. Supported formats are `.jpg`, `.jpeg`, `.png`, `.webp`, and `.avif`, including uppercase extensions. Spaces in filenames work. Use web-sized files to keep loading lightweight.
-3. Use descriptive filenames. The gallery uses natural filename order; numeric prefixes such as `01-`, `02-`, and `03-` give you control over the sequence. Keep the exact filename when adding optional metadata below.
+3. Keep the existing filenames for the approved Senior Design and AIAA image sets; their order is explicitly configured. Additional images use natural filename order, where numeric prefixes such as `01-`, `02-`, and `03-` can control the sequence. Keep the exact filename when adding optional metadata below.
 4. Commit the upload to `main` and wait for the GitHub Pages workflow to succeed.
 5. Refresh the portfolio. The images appear in that work entry's small horizontal thumbnail strip with a total image count. Scroll naturally by touch; left/right scroll controls appear when the strip overflows. Click a thumbnail to open the larger image and its caption in a popup. Use Previous/Next or the left/right arrow keys, and Close or Escape to return.
 
 No gallery or missing-image placeholder appears before real images are uploaded. This workflow is for still images.
 
-Senior Design, AIAA, and research use the same compact strip. Large images appear only after a thumbnail is clicked; there is no large inline image. The strip is available before expanding the engineering description. See [the Senior Design image list](SENIOR_DESIGN_IMAGES.md) for its exact filenames, order, and approved captions.
+Senior Design, AIAA, and research use the same compact strip. Large images appear only after a thumbnail is clicked; there is no large inline image. The strip is available before expanding the engineering description. See the [Senior Design image list](SENIOR_DESIGN_IMAGES.md) and [AIAA image list](AIAA_IMAGES.md) for exact filenames, order, and approved captions.
 
 ## Optional descriptions, captions, and credits
 

@@ -25,6 +25,31 @@
       "caption": "UConn senior design team, working with Windham Water Works. I am second from the left and serve as team manager."
     }
   },
-  "aiaa": {},
+  "aiaa": {
+    "Hotfiretestflamephoto.JPG": {
+      "alt": "UConn AIAA team propulsion hardware operating during a hot-fire test.",
+      "caption": "UConn AIAA hot-fire testing, showing the team’s propulsion hardware in operation."
+    },
+    "Hotfireteststandphoto.jpg": {
+      "alt": "Team hot-fire test stand with propulsion hardware and connected plumbing.",
+      "caption": "Team hot-fire test setup, showing the hardware and plumbing arrangement."
+    },
+    "CAD ethanol side start with tank.png": {
+      "alt": "Team CAD cutaway showing the ethanol-side assembly and tank.",
+      "caption": "CAD cutaway of the ethanol-side assembly. Team CAD model."
+    },
+    "Ethanol Fluid system.jpg": {
+      "alt": "Full working ethanol feed-system drawing with components and flow paths for the team's collaborative pressure-drop analysis.",
+      "caption": "Working ethanol feed-system layout documenting components and flow paths for our pressure-drop analysis."
+    },
+    "Nitrous Fluid Piping.jpg": {
+      "alt": "Full working nitrous feed-system drawing with components and flow paths for the team's collaborative pressure-drop analysis.",
+      "caption": "Working nitrous feed-system layout documenting components and flow paths for our pressure-drop analysis."
+    },
+    "Lockheed event.JPG": {
+      "alt": "Lockheed Martin event that Alex Yuan helped organize through his AIAA leadership role.",
+      "caption": "Lockheed Martin event I helped organize through my AIAA leadership role."
+    }
+  },
   "combustion": {}
 }

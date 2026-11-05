@@ -21,6 +21,14 @@ const seniorDesignOrder = [
   '04-concept-2-alternative.png',
   '05-transducer-test-rig.png',
 ];
+const aiaaOrder = [
+  'Hotfiretestflamephoto.JPG',
+  'Hotfireteststandphoto.jpg',
+  'CAD ethanol side start with tank.png',
+  'Ethanol Fluid system.jpg',
+  'Nitrous Fluid Piping.jpg',
+  'Lockheed event.JPG',
+];
 const isTeamPhoto = (filename: string) => /(?:^|[-_\s])team[-_\s]*(?:58|photo)(?:\b|[_\s-])/i.test(filename.replace(/\.[^.]+$/, ''));
 const text = (value: unknown) => typeof value === 'string'
   ? value.trim().replace(/\u2014/g, ' - ')
@@ -44,6 +52,13 @@ const imagesByProject: Record<string, GalleryImage[]> = Object.fromEntries(proje
         const position = (name: string) => {
           const index = seniorDesignOrder.indexOf(name);
           return index >= 0 ? index : isTeamPhoto(name) ? 5 : 6;
+        };
+        const order = position(firstName) - position(secondName);
+        if (order) return order;
+      } else if (projectId === 'aiaa') {
+        const position = (name: string) => {
+          const index = aiaaOrder.indexOf(name);
+          return index >= 0 ? index : aiaaOrder.length;
         };
         const order = position(firstName) - position(secondName);
         if (order) return order;

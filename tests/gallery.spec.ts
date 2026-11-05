@@ -332,3 +332,116 @@ test('the six actual Senior uploads render only as ordered thumbnails and open t
   }
   expect(browserErrors.get(page), 'Actual gallery browser and resource errors').toEqual([]);
 });
+
+const aiaaUploadNames = [
+  'Hotfiretestflamephoto.JPG',
+  'Hotfireteststandphoto.jpg',
+  'CAD ethanol side start with tank.png',
+  'Ethanol Fluid system.jpg',
+  'Nitrous Fluid Piping.jpg',
+  'Lockheed event.JPG',
+];
+
+for (const width of [1440, 768, 375, 320]) {
+  test(`the six actual AIAA uploads keep full thumbnail captions and accessible original-image viewing at ${width}px`, async ({ page }) => {
+    trackErrors(page);
+    const height = width === 1440 ? 900 : 812;
+    const captions = require('../src/gallery-captions.json').aiaa;
+    await page.setViewportSize({ width, height });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/?v=aiaa-gallery#aiaa-images');
+    await page.evaluate(() => document.fonts.ready);
+    const gallery = page.locator('#aiaa-images');
+    await expectThumbnailOnly(gallery);
+    await expect(gallery).toHaveClass(/gallery-wrap-captions/);
+    await expect(page.locator('#ultrasonic-images')).not.toHaveClass(/gallery-wrap-captions/);
+    await expect(page.locator('#aiaa-story')).toBeHidden();
+    await expect(page.locator('#aiaa-trigger')).toHaveAttribute('aria-expanded', 'false');
+    await expect(entry(page, 'aiaa').locator('video, iframe')).toHaveCount(0);
+    await expect(gallery.locator('.gallery-thumbnail')).toHaveCount(6);
+    const paths = await gallery.locator('.gallery-thumbnail img').evaluateAll(images => images.map(image => (image as HTMLImageElement).src));
+    expect(paths.map(path => decodeURIComponent(new URL(path).pathname).split('/').at(-1))).toEqual(aiaaUploadNames);
+
+    for (let index = 0; index < aiaaUploadNames.length; index++) {
+      const thumbnail = gallery.locator('.gallery-thumbnail').nth(index);
+      const metadata = captions[aiaaUploadNames[index]];
+      expect(Boolean(metadata?.caption && metadata?.alt), 'Each actual AIAA image has its supplied caption and alt text').toBe(true);
+      await thumbnail.scrollIntoViewIfNeeded();
+      await expect.poll(() => thumbnail.locator('img').evaluate(element => (element as HTMLImageElement).complete && (element as HTMLImageElement).naturalWidth > 0)).toBe(true);
+      await expect(thumbnail.locator('.gallery-thumbnail-caption')).toHaveText(metadata.caption);
+      expect((await thumbnail.getAttribute('aria-label'))?.includes(metadata.caption), 'The thumbnail name includes its visible caption').toBe(true);
+      expect(await thumbnail.evaluate(element => {
+        const image = element.querySelector('img')!;
+        const imageBounds = image.getBoundingClientRect();
+        const frame = element.querySelector('.gallery-thumbnail-image')!.getBoundingClientRect();
+        const caption = element.querySelector('.gallery-thumbnail-caption')!;
+        const bounds = caption.getBoundingClientRect();
+        const style = getComputedStyle(caption);
+        return getComputedStyle(image).objectFit === 'contain'
+          && imageBounds.left >= frame.left && imageBounds.right <= frame.right
+          && imageBounds.top >= frame.top && imageBounds.bottom <= frame.bottom
+          && frame.height <= 112 && bounds.top >= frame.bottom - 1
+          && caption.scrollHeight <= caption.clientHeight + 1
+          && style.display === 'block' && style.overflowY === 'visible'
+          && style.whiteSpace === 'normal';
+      }), 'AIAA images remain in compact frames and complete captions wrap below them').toBe(true);
+      if (width === 1440) {
+        const response = await page.request.get(paths[index]);
+        expect(response.status()).toBe(200);
+        expect(response.headers()['content-type']).toMatch(/^image\/(?:jpeg|png)$/);
+        const original = await readFile(new URL(`../src/assets/projects/aiaa/${aiaaUploadNames[index]}`, import.meta.url));
+        expect((await response.body()).equals(original), 'AIAA photographs, CAD, and whiteboards retain their uploaded bytes').toBe(true);
+      }
+    }
+
+    const firstFrameHeight = await gallery.locator('.gallery-thumbnail-image').first().evaluate(element => element.getBoundingClientRect().height);
+    expect(firstFrameHeight).toBe(await page.locator('#ultrasonic-images .gallery-thumbnail-image').first().evaluate(element => element.getBoundingClientRect().height));
+    await gallery.locator('.gallery-strip').evaluate(element => element.scrollTo({ left: 0, behavior: 'instant' }));
+    await expectNoOverflow(page);
+    await expectAccessible(page);
+    const capture = process.env.PORTFOLIO_CAPTURE_GALLERY === '1' && [1440, 375].includes(width);
+    const device = width === 1440 ? 'desktop' : 'mobile';
+    if (capture) await gallery.screenshot({ path: `/workspace/artifacts/aiaa-real-${device}.png` });
+    const opener = gallery.locator('.gallery-thumbnail').first();
+    await opener.scrollIntoViewIfNeeded();
+    await opener.focus();
+    await opener.press('Enter');
+    const dialog = gallery.getByRole('dialog', { name: projectTitles.aiaa, exact: true });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.locator('.gallery-counter')).toHaveText('Image 1 of 6');
+    await expect(dialog.getByRole('img')).toHaveAttribute('src', paths[0].replace(new URL(paths[0]).origin, ''));
+    await expect(dialog.getByRole('img')).toHaveAttribute('alt', captions[aiaaUploadNames[0]].alt);
+    await expect(dialog.locator('figcaption > p').first()).toHaveText(captions[aiaaUploadNames[0]].caption);
+    await expect(dialog.getByRole('button', { name: 'Close image viewer' })).toBeFocused();
+    if (capture) await dialog.screenshot({ path: `/workspace/artifacts/aiaa-real-dialog-${device}.png` });
+    await dialog.getByRole('button', { name: 'Next image', exact: true }).click();
+
+    for (let index = 1; index < aiaaUploadNames.length; index++) {
+      await expect(dialog.locator('.gallery-counter')).toHaveText(`Image ${index + 1} of 6`);
+      await expect(dialog.getByRole('img')).toHaveAttribute('src', paths[index].replace(new URL(paths[index]).origin, ''));
+      await expect(dialog.getByRole('img')).toHaveAttribute('alt', captions[aiaaUploadNames[index]].alt);
+      await expect(dialog.locator('figcaption > p').first()).toHaveText(captions[aiaaUploadNames[index]].caption);
+      await expect.poll(() => dialog.getByRole('img').evaluate(element => (element as HTMLImageElement).complete && (element as HTMLImageElement).naturalWidth > 0)).toBe(true);
+      expect(await dialog.getByRole('img').evaluate(element => getComputedStyle(element).objectFit)).toBe('contain');
+      const bounds = (await dialog.boundingBox())!;
+      expect(bounds.x >= 0 && bounds.y >= 0 && bounds.x + bounds.width <= width && bounds.y + bounds.height <= height, 'The native viewer remains within the viewport').toBe(true);
+      if (index === 2 && capture) await dialog.screenshot({ path: `/workspace/artifacts/aiaa-real-cad-${device}.png` });
+      if (index === 3) {
+        await expectAccessible(page);
+        if (capture) await dialog.screenshot({ path: `/workspace/artifacts/aiaa-real-whiteboard-${device}.png` });
+      }
+      if (index < aiaaUploadNames.length - 1) await page.keyboard.press('ArrowRight');
+    }
+    await page.keyboard.press('ArrowRight');
+    await expect(dialog.locator('.gallery-counter')).toHaveText('Image 1 of 6');
+    await page.keyboard.press('ArrowLeft');
+    await expect(dialog.locator('.gallery-counter')).toHaveText('Image 6 of 6');
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+    await expect(opener).toBeFocused();
+    await expect(page.locator('#aiaa-story')).toBeHidden();
+    await expectThumbnailOnly(gallery);
+    await expectNoOverflow(page);
+    expect(browserErrors.get(page), 'Actual AIAA browser and resource errors').toEqual([]);
+  });
+}

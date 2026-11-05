@@ -73,31 +73,40 @@ const teamMetadata = {
   alt: 'UConn senior design team portrait. Alex Yuan is second from the left.',
   caption: 'UConn senior design team, working with Windham Water Works. I am second from the left and serve as team manager.',
 };
+const aiaaFilenames = [
+  'Hotfiretestflamephoto.JPG',
+  'Hotfireteststandphoto.jpg',
+  'CAD ethanol side start with tank.png',
+  'Ethanol Fluid system.jpg',
+  'Nitrous Fluid Piping.jpg',
+  'Lockheed event.JPG',
+];
+type ImageMetadata = Omit<Catalog[string][number], 'src'>;
 
-function expectCatalog(catalog: Catalog, includeTeam: boolean) {
+function expectCatalog(catalog: Catalog, includeTeam: boolean, aiaaMetadata: ImageMetadata[]) {
   expect(Object.fromEntries(Object.entries(catalog).map(([id, images]) => [id, images.length]))).toEqual({
-    ultrasonic: includeTeam ? 6 : 5, aiaa: 2, combustion: 1, manifold: 0, unknown: 0,
+    ultrasonic: includeTeam ? 6 : 5, aiaa: 6, combustion: 2, manifold: 0, unknown: 0,
   });
   expect(catalog.ultrasonic.slice(0, 5).map(({ alt, caption }) => ({ alt, caption })), 'Featured image metadata is preserved in the five-image order').toEqual(featuredImages.map(({ alt, caption }) => ({ alt, caption })));
   if (includeTeam) {
     expect(catalog.ultrasonic[5]).toMatchObject(teamMetadata);
   }
-  const first = catalog.aiaa[0];
+  expect(catalog.aiaa.map(({ src: _src, ...metadata }) => metadata), 'All six AIAA images retain their source metadata in display order').toEqual(aiaaMetadata);
+  const first = catalog.combustion[0];
   expect(first.alt === 'Fixture - overview' && first.caption === 'Fixture - caption' && first.credit === 'Test team', 'Numeric upload order and normalized metadata are preserved').toBe(true);
-  const fallback = catalog.aiaa[1];
+  const fallback = catalog.combustion[1];
   expect(fallback.alt === 'detail' && fallback.caption === 'detail' && !('credit' in fallback), 'Uploads work without optional metadata').toBe(true);
-  expect(catalog.combustion[0].caption === 'burner', 'Each permitted project gets filename-based labels').toBe(true);
 }
 
-test('Vite builds the five featured uploads and optional sixth team alias while excluding confidential files', async ({ page }) => {
+test('Vite builds ordered Senior and AIAA uploads with source metadata while excluding confidential files', async ({ page }) => {
   const root = await mkdtemp(join(tmpdir(), 'portfolio-project-images-'));
   let server: ViteDevServer | undefined;
   let production: PreviewServer | undefined;
   const imageFiles = [
     ...featuredImages.map(({ filename }) => `ultrasonic/${filename}`),
-    'aiaa/2 overview.PNG',
-    'aiaa/10_detail.png',
-    'combustion/1_burner.PNG',
+    ...aiaaFilenames.map(filename => `aiaa/${filename}`),
+    'combustion/2 overview.PNG',
+    'combustion/10_detail.png',
     'ultrasonic/nested/1_nested-fixture.png',
     'manifold/1_confidential-fixture.png',
     'unknown/1_unknown-fixture.png',
@@ -115,8 +124,13 @@ test('Vite builds the five featured uploads and optional sixth team alias while 
       expect(captions.ultrasonic[filename], 'Real source metadata matches the approved featured image').toEqual(metadata);
     }
     expect(captions.ultrasonic['06-team-photo.jpg'], 'Pending team metadata is copied from the real catalog').toEqual(teamMetadata);
-    captions.aiaa = {
-      ...captions.aiaa,
+    const aiaaMetadata: ImageMetadata[] = aiaaFilenames.map(filename => captions.aiaa[filename]);
+    for (const metadata of aiaaMetadata) {
+      expect(Boolean(metadata?.alt?.trim() && metadata?.caption?.trim()), 'Each AIAA upload has meaningful source alt text and a caption').toBe(true);
+    }
+    captions.aiaa['pending-upload.png'] = { alt: 'Pending test-only image', caption: 'Metadata without an uploaded file' };
+    captions.combustion = {
+      ...captions.combustion,
       '2 overview.PNG': {
         alt: ' Fixture\u2014overview ',
         caption: ' Fixture\u2014caption ',
@@ -127,7 +141,15 @@ test('Vite builds the five featured uploads and optional sixth team alias while 
     for (const [image, png] of fixtures) {
       const path = join(root, 'src/assets/projects', image);
       await mkdir(dirname(path), { recursive: true });
-      await writeFile(path, png);
+      if (/\.jpe?g$/i.test(image)) {
+        const shade = imageFiles.indexOf(image) * 13;
+        await page.setContent(`<!doctype html><html><body style="margin:0;background:rgb(${shade},100,180)"></body></html>`);
+        const jpeg = await page.screenshot({ type: 'jpeg', clip: { x: 0, y: 0, width: 1, height: 1 } });
+        fixtures.set(image, jpeg);
+        await writeFile(path, jpeg);
+      } else {
+        await writeFile(path, png);
+      }
     }
     await writeFile(join(root, 'src/assets/projects/ultrasonic/3_notes.txt'), 'Test-only non-image file');
     await writeFile(join(root, 'package.json'), JSON.stringify({ private: true, type: 'module' }));
@@ -157,21 +179,23 @@ window.__projectCatalog = Object.fromEntries(['ultrasonic', 'aiaa', 'combustion'
       await page.goto(baseURL);
       await page.waitForFunction(() => Boolean((window as unknown as { __projectCatalog?: unknown }).__projectCatalog));
       const catalog: Catalog = await page.evaluate(() => (window as unknown as { __projectCatalog: Catalog }).__projectCatalog);
-      expectCatalog(catalog, includeTeam);
+      expectCatalog(catalog, includeTeam, aiaaMetadata);
       const filenames = (images: Catalog[string]) => images.map(image => decodeURIComponent(new URL(image.src, baseURL).pathname).split('/').at(-1));
       expect(filenames(catalog.ultrasonic)).toEqual([...featuredImages.map(({ filename }) => filename), ...(includeTeam ? ['ME_team58.jpg'] : [])]);
-      expect(filenames(catalog.aiaa)).toEqual(['2 overview.PNG', '10_detail.png']);
+      expect(filenames(catalog.aiaa)).toEqual(aiaaFilenames);
+      expect(filenames(catalog.aiaa).slice(3, 5), 'The paired fluid-system whiteboard drawings stay adjacent').toEqual(['Ethanol Fluid system.jpg', 'Nitrous Fluid Piping.jpg']);
+      expect(filenames(catalog.combustion)).toEqual(['2 overview.PNG', '10_detail.png']);
 
       const transformed = await server.transformRequest('/src/project-images.ts');
       expect(Boolean(transformed), 'Real Vite glob transformation succeeds').toBe(true);
-      const allowedNames = [...featuredImages.map(({ filename }) => filename), '2 overview.PNG', '10_detail.png', '1_burner.PNG', ...(includeTeam ? ['ME_team58.jpg'] : [])];
+      const allowedNames = [...featuredImages.map(({ filename }) => filename), ...aiaaFilenames, '2 overview.PNG', '10_detail.png', ...(includeTeam ? ['ME_team58.jpg'] : [])];
       expect(allowedNames.every(filename => transformed!.code.includes(filename) || transformed!.code.includes(filename.replaceAll(' ', '%20')))).toBe(true);
       expect(['1_confidential-fixture.png', '1_unknown-fixture.png', '1_nested-fixture.png', '3_notes.txt'].filter(filename => transformed!.code.includes(filename)), 'Excluded files never enter the import graph').toEqual([]);
 
-      const asset = await page.request.get(new URL(catalog.aiaa[0].src, baseURL).href);
+      const asset = await page.request.get(new URL(catalog.combustion[0].src, baseURL).href);
       expect(asset.status()).toBe(200);
       expect(asset.headers()['content-type']).toContain('image/png');
-      expect((await asset.body()).equals(fixtures.get('aiaa/2 overview.PNG')!), 'Discovered URL serves the test upload bytes').toBe(true);
+      expect((await asset.body()).equals(fixtures.get('combustion/2 overview.PNG')!), 'Discovered URL serves the test upload bytes').toBe(true);
 
       await page.goto('about:blank');
       await server.close();
@@ -184,7 +208,7 @@ window.__projectCatalog = Object.fromEntries(['ultrasonic', 'aiaa', 'combustion'
         logLevel: 'error',
       });
       const builtAssets = await readdir(join(root, 'dist/assets'));
-      expect(builtAssets.filter(name => /\.(?:png|jpg)$/i.test(name))).toHaveLength(includeTeam ? 9 : 8);
+      expect(builtAssets.filter(name => /\.(?:png|jpg)$/i.test(name))).toHaveLength(includeTeam ? 14 : 13);
       expect(forbiddenMarkers.filter(marker => builtAssets.some(name => name.includes(marker))), 'Forbidden uploads are not emitted').toEqual([]);
       const builtScripts = await Promise.all(builtAssets.filter(name => name.endsWith('.js')).map(name => readFile(join(root, 'dist/assets', name), 'utf8')));
       const manifest = await readFile(join(root, 'dist/.vite/manifest.json'), 'utf8');
@@ -203,7 +227,7 @@ window.__projectCatalog = Object.fromEntries(['ultrasonic', 'aiaa', 'combustion'
       await page.goto(productionURL);
       await page.waitForFunction(() => Boolean((window as unknown as { __projectCatalog?: unknown }).__projectCatalog));
       const builtCatalog: Catalog = await page.evaluate(() => (window as unknown as { __projectCatalog: Catalog }).__projectCatalog);
-      expectCatalog(builtCatalog, includeTeam);
+      expectCatalog(builtCatalog, includeTeam, aiaaMetadata);
       for (const [project, images] of Object.entries(builtCatalog)) {
         for (let index = 0; index < images.length; index += 1) {
           const original = `${project}/${filenames(catalog[project])[index]}`;

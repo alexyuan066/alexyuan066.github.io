@@ -6,7 +6,7 @@ function ScrollArrow({ direction }: { direction: 'left' | 'right' }) {
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d={direction === 'left' ? 'M20 12H5m6-6-6 6 6 6' : 'M4 12h15m-6-6 6 6-6 6'} stroke="currentColor" strokeWidth="1.5" /></svg>;
 }
 
-export default function ProjectGallery({ images, title, galleryId }: { images: GalleryImage[]; title: string; galleryId?: string }) {
+export default function ProjectGallery({ images, title, galleryId, wrapCaptions = false }: { images: GalleryImage[]; title: string; galleryId?: string; wrapCaptions?: boolean }) {
   const identifier = useId();
   const stripId = `${identifier}-strip`;
   const titleId = `${identifier}-title`;
@@ -66,7 +66,7 @@ export default function ProjectGallery({ images, title, galleryId }: { images: G
   }
 
   return (
-    <section id={galleryId} className="project-gallery" aria-label={`${title} images`}>
+    <section id={galleryId} className={`project-gallery${wrapCaptions ? ' gallery-wrap-captions' : ''}`} aria-label={`${title} images`}>
       <div className="gallery-heading"><p>Images <span>{String(images.length).padStart(2, '0')}</span></p>{scroll.overflow && <div className="gallery-scroll-controls"><button type="button" onClick={() => scrollImages(-1)} disabled={!scroll.left} aria-label={`Scroll ${title} images left`} aria-controls={stripId}><ScrollArrow direction="left" /></button><button type="button" onClick={() => scrollImages(1)} disabled={!scroll.right} aria-label={`Scroll ${title} images right`} aria-controls={stripId}><ScrollArrow direction="right" /></button></div>}</div>
       <div className="gallery-strip" ref={strip} id={stripId} role="group" aria-label={`${title} image thumbnails`}>
         {images.map((image, index) => <button className="gallery-thumbnail" type="button" key={`${image.src}-${index}`} aria-label={`Open image ${index + 1} of ${images.length}: ${image.caption}${image.alt !== image.caption ? `. ${image.alt}` : ''}`} onClick={event => { opener.current = event.currentTarget; setActiveIndex(index); }}><span className="gallery-thumbnail-image"><img src={image.src} alt="" loading="lazy" decoding="async" /></span><span className="gallery-thumbnail-caption">{image.caption}</span></button>)}
